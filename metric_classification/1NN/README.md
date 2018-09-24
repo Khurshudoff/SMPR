@@ -22,10 +22,7 @@
 	<li><a href="https://www.codecogs.com/eqnedit.php?latex={\color{Red}&space;w(i,x)}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?{\color{Red}&space;w(i,x)}" title="{\color{Red} w(i,x)}" /></a> - вес (степень важности) i-го соседа объекта x, неотрицателен и не возрастает по i.</li>
 </ul>
 
-<h2>1NN</h2>
-
-<a href="https://www.codecogs.com/eqnedit.php?latex=w(i,x)&space;=&space;[i\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?w(i,x)&space;=&space;[i\leq&space;1]" title="w(i,x) = [i\leq 1]" /></a> - метод 1NN
-
+<h2>Постановка задачи:</h2>
 <h3>Дано:</h3>
 <ul>
 	<li>X - объекты</li>
@@ -38,6 +35,13 @@
 	<li>Класс нового объекта х</li>
 </ul>
 
+<h2>1NN</h2>
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=w(i,x)&space;=&space;[i\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?w(i,x)&space;=&space;[i\leq&space;1]" title="w(i,x) = [i\leq 1]" /></a> - метод 1NN
+
+
+<img src="1NN/1NN_plot.png">
+
 <h3>Плюсы:</h3>
 <ul>
 	<li>Простота реализации</li>
@@ -48,5 +52,24 @@
 <ul>
 	<li>Неустойчивость</li>
 	<li>Требуется хранить всю выборку</li>
-	<li>требуется O(n) времени на вычисление класса нового объекта</li>
+	<li>требуется много времени на вычисление класса нового объекта</li>
+</ul>
+
+<h2>KNN</h2>
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=$$w(i,x)&space;=&space;[i&space;\leq&space;k]$$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$$w(i,x)&space;=&space;[i&space;\leq&space;k]$$" title="$$w(i,x) = [i \leq k]$$" /></a> - метод KNN
+
+<img src="KNN/KNN_plot.png">
+
+<h3>Плюсы:</h3>
+<ul>
+	<li>Простота реализации</li>
+	<li>O(1) - время обучения</li>
+	<li>Устойчивость к выбросам</li>
+</ul>
+
+<h3>Минусы:</h3>
+<ul>
+	<li>Требуется хранить всю выборку</li>
+	<li>требуется много времени на вычисление класса нового объекта</li>
 </ul>
