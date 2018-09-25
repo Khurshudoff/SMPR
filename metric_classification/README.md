@@ -88,7 +88,7 @@
 
 <h3> Плюсы и минусы аналогичны предыдущему методу </h3>
 
-<img src="k_loo.png">
-<img src="q_loo.png">
-<img src="classification_card.png">
+<img src="kWNN(with LOO)/k_loo.png">
+<img src="kWNN(with LOO)/q_loo.png">
+<img src="kWNN(with LOO)/classification_card.png">
 
