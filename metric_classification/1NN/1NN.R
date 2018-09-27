@@ -3,7 +3,6 @@ euclideanDistance <- function(u, v){
 }
 
 oneNN <- function(xl, z, metricFunction =euclideanDistance){
-  ##  Сортируем выборку согласно классифицируемого
   
   min_dist = 1e15
   min_dist_class = 'setosa'
@@ -26,10 +25,16 @@ oneNN <- function(xl, z, metricFunction =euclideanDistance){
 colors <- c("setosa" = "red", "versicolor" = "green3",
             "virginica" = "blue")
 
-iris30 = iris[sample(c(1:150), 30, replace=FALSE), 3:5]
+iris30 = read.table("/Users/khurshudov/Desktop/SMPR/metric_classification/iris30.txt", sep="\t", header=TRUE)
 
-plot(iris30[, 1:2], pch = 21, bg = colors[iris30$Species],
-     col = colors[iris30$Species])
+plot(iris30[, 1:2], 
+     pch = 21, 
+     bg = colors[iris30$Species],
+     col = colors[iris30$Species],
+     xlab = 'petal length',
+     ylab = 'petal width',
+     main = '1NN'
+     )
 
 xl <- iris30[, 1:3]
 
@@ -43,3 +48,4 @@ for (xtmp in seq(0, 7, by=0.1)){
     points(z[1], z[2], pch = 1, col = colors[class])
   }
 }
+

@@ -1,9 +1,22 @@
-<h1>Метрические классификаторы:</h1>
+<h1>Метрические классификаторы</h1>
 
-<h2>Гипотеза компактности:</h2>
+<h2>Постановка задачи:</h2>
+<h3>Дано:</h3>
+<ul>
+	<li>X - объекты</li>
+	<li>Y - ответы</li>
+	<li><a href="https://www.codecogs.com/eqnedit.php?latex=X^l&space;=&space;(x_i,y_i)_{i=1}^{l}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?X^l&space;=&space;(x_i,y_i)_{i=1}^{l}" title="X^l = (x_i,y_i)_{i=1}^{l}" /></a> - обучающая выборка</li>
+</ul>
+
+<h3>Найти:</h3>
+<ul>
+	<li>Класс нового объекта х</li>
+</ul>
+
+<h2>Гипотеза компактности</h2>
 <p>близкие объекты, как правило, лежат в одном классе</p>
 
-<h2>Обобщенный метрический алгоритм классификации:</h2>
+<h2>Обобщенный метрический алгоритм классификации</h2>
 Для произвольного <a href="https://www.codecogs.com/eqnedit.php?latex=x\in&space;X" target="_blank"><img src="https://latex.codecogs.com/gif.latex?x\in&space;X" title="x\in X" /></a> отранжируем объекты <a href="https://www.codecogs.com/eqnedit.php?latex=x_1,x_2,...x_l" target="_blank"><img src="https://latex.codecogs.com/gif.latex?x_1,x_2,...x_l" title="x_1,x_2,...x_l" /></a>: 
 
 <br> <div align="center"><a href="https://www.codecogs.com/eqnedit.php?latex=$$\rho&space;(&space;x,x^{(1)}&space;)\leq&space;\rho&space;(&space;x,x^{(2)}&space;)\leq&space;...&space;\leq&space;\rho&space;(&space;x,x^{(l)}&space;)$$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$$\rho&space;(&space;x,x^{(1)}&space;)\leq&space;\rho&space;(&space;x,x^{(2)}&space;)\leq&space;...&space;\leq&space;\rho&space;(&space;x,x^{(l)}&space;)$$" title="$$\rho ( x,x^{(1)} )\leq \rho ( x,x^{(2)} )\leq ... \leq \rho ( x,x^{(l)} )$$" /></a>,</div>
@@ -20,19 +33,6 @@
 <ul>
 	<li><a href="https://www.codecogs.com/eqnedit.php?latex=\Gamma&space;_y&space;(x)&space;=&space;{\sum_{i=1}^{l}{\left&space;[&space;y^{(i)}&space;=&space;y&space;\right&space;]&space;w(i,x))&space;}&space;}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\Gamma&space;_y&space;(x)&space;=&space;{\sum_{i=1}^{l}{\left&space;[&space;y^{(i)}&space;=&space;y&space;\right&space;]&space;w(i,x))&space;}&space;}" title="\Gamma _y (x) = {\sum_{i=1}^{l}{\left [ y^{(i)} = y \right ] w(i,x)) } }" /></a> - оценка близости объекта x к классу y.</li>
 	<li><a href="https://www.codecogs.com/eqnedit.php?latex={\color{Red}&space;w(i,x)}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?{\color{Red}&space;w(i,x)}" title="{\color{Red} w(i,x)}" /></a> - вес (степень важности) i-го соседа объекта x, неотрицателен и не возрастает по i.</li>
-</ul>
-
-<h2>Постановка задачи:</h2>
-<h3>Дано:</h3>
-<ul>
-	<li>X - объекты</li>
-	<li>Y - ответы</li>
-	<li><a href="https://www.codecogs.com/eqnedit.php?latex=X^l&space;=&space;(x_i,y_i)_{i=1}^{l}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?X^l&space;=&space;(x_i,y_i)_{i=1}^{l}" title="X^l = (x_i,y_i)_{i=1}^{l}" /></a> - обучающая выборка</li>
-</ul>
-
-<h3>Найти:</h3>
-<ul>
-	<li>Класс нового объекта х</li>
 </ul>
 
 <h2>1NN</h2>
@@ -88,7 +88,7 @@
 
 <h3> Плюсы и минусы аналогичны предыдущему методу </h3>
 
-<img src="k_loo.png">
-<img src="q_loo.png">
-<img src="classification_card.png">
+<img src="kWNN(with LOO)/k_loo.png">
+<img src="kWNN(with LOO)/q_loo.png">
+<img src="kWNN(with LOO)/classification_card.png">
 
