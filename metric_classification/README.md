@@ -40,7 +40,7 @@
 <a href="https://www.codecogs.com/eqnedit.php?latex=w(i,x)&space;=&space;[i\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?w(i,x)&space;=&space;[i\leq&space;1]" title="w(i,x) = [i\leq 1]" /></a> - метод 1NN
 
 
-<img src="1NN/1NN_plot.png">
+<img src="1NN/1NN_classification_card.png">
 
 <h3>Плюсы:</h3>
 <ul>
