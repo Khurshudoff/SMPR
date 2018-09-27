@@ -86,7 +86,10 @@
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=$w_i&space;=&space;q^i$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$w_i&space;=&space;q^i$" title="$w_i = q^i$" /></a>
 
-<h3> Плюсы и минусы аналогичны предыдущему методу </h3>
+<h3> Плюсы </h3>
+<ul>
+	<li>Учитывается степень близости объекта</li>
+</ul>
 
 <img src="kWNN(with LOO)/kWNN.png">
 
@@ -103,6 +106,7 @@
 <img src="kWNN(model)/kWNN_model.png">
 
 <h2>Сравнение карт классификации</h2>
+
 <img src="1NN/1NN_classification_card.png">
 <img src="KNN/5NN_classification_card.png">
 <img src="kWNN(with LOO)/kWNN_classification_card.png">
