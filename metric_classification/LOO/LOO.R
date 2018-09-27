@@ -31,17 +31,19 @@ kNN <- function(xl, z, k){
 }
 
 
-iris30 = iris[sample(c(1:150), 30, replace=FALSE),]
+
+
+iris30 = read.table("/Users/khurshudov/Desktop/SMPR/metric_classification/iris30.txt", sep="\t", header=TRUE)
 
 
 colors <- c("setosa" = "red", "versicolor" = "green3",
             "virginica" = "blue")
-#plot(iris30[, 3:4], pch = 21, bg = colors[iris30$Species], col
+#plot(iris30[, 1:2], pch = 21, bg = colors[iris30$Species], col
 #     = colors[iris30$Species], asp = 1)
 
 
 z <- c(2.7, 1)
-xl <- iris30[, 3:5]
+xl <- iris30[, 1:3]
 class <- kNN(xl, z, k=6)
 # points(z[1], z[2], pch = 22, bg = colors[class], asp = 1)
 
@@ -50,14 +52,16 @@ loo <- c()
 for (k in c(1:30)){
   count = 0
   for (i in c(1:30)){
-    xl = iris30[-i,3:5]
-    class <- kNN(xl, iris30[i,3:4], k=k)
-    if(iris30[i,5] != class){
+    xl = iris30[-i,1:3]
+    class <- kNN(xl, iris30[i,1:2], k=k)
+    if(iris30[i,3] != class){
       count <- count + 1
     }
   }
   loo <- c(loo, count/30)
 }
+
+par(mfrow=c(1,2))
 
 plot(c(1:30), 
      loo, 
@@ -67,4 +71,20 @@ plot(c(1:30),
      ylab='loo')
 lines(c(1:30), loo, type="l", pch=22, lty=1, col="red")
 
-print(which.min(loo))
+opt_k = which.min(loo)
+
+points(which.min(loo), min(loo), pch=21, bg = 'red', col = 'red')
+
+plot(iris30[, 1:2], pch = 21, bg = colors[iris30$Species], col
+     = colors[iris30$Species], asp = 1, main='1NN', xlab = 'petal length', ylab = 'petal width')
+
+points_array <- c()
+
+for (xtmp in seq(0, 7, by=0.1)){
+  for (ytmp in seq(0, 3, by=0.1)){
+    z <- c(xtmp,ytmp)
+    class <- kNN(xl, z, opt_k)
+    points_array <- c(points_array, c(z))
+    points(z[1], z[2], pch = 1, col = colors[class])
+  }
+}

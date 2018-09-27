@@ -59,7 +59,7 @@
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=$$w(i,x)&space;=&space;[i&space;\leq&space;k]$$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$$w(i,x)&space;=&space;[i&space;\leq&space;k]$$" title="$$w(i,x) = [i \leq k]$$" /></a> - метод KNN
 
-<img src="KNN/5NN_plot.png">
+<img src="KNN/5NN_classification_card.png">
 
 <h3>Плюсы:</h3>
 <ul>
