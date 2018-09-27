@@ -39,8 +39,8 @@ kWNN <- function(xl, z, k, q){
   return (class)
 }
 
-layout(matrix(c(1,1,2,2,0,3,3,0), 2, 4, byrow = TRUE), 
-       widths=c(1,1,1,1), heights=c(1,1))
+# layout(matrix(c(1,1,2,2,0,3,3,0), 2, 4, byrow = TRUE), 
+#        widths=c(1,1,1,1), heights=c(1,1))
 
 iris30 = read.table("/Users/khurshudov/Desktop/SMPR/metric_classification/iris30.txt", sep="\t", header=TRUE)
 # iris30 = iris[sample(c(1:150), 30, replace=FALSE),3:5]

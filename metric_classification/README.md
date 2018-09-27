@@ -102,3 +102,7 @@
 
 <img src="kWNN(model)/kWNN_model.png">
 
+<h2>Сравнение карт классификации</h2>
+<img src="1NN/1NN_classification_card.png">
+<img src="KNN/5NN_classification_card.png">
+<img src="kWNN/kWNN_classification_card.png">
