@@ -44,6 +44,9 @@ kWNN <- function(xl, z, k, q){
 model_data = read.table("/Users/khurshudov/Desktop/SMPR/metric_classification/custom.txt", sep="\t", header=TRUE)
 
 colors <- c("class1" = "red", "class2" = "green3")
+
+par(mfrow=c(1,2))
+
 plot(model_data[, 1:2], pch = 21, bg = colors[model_data$class], 
      col = colors[model_data$class], asp = 1, xlab='property 1', ylab='property 2', main = '5NN')
 
@@ -51,6 +54,15 @@ plot(model_data[, 1:2], pch = 21, bg = colors[model_data$class],
 z <- c(2, 2)
 xl <- model_data
 class <- kWNN(xl, z, k=5, q=1)
+points(z[1], z[2], pch = 22, bg = colors[class], asp = 1)
+
+plot(model_data[, 1:2], pch = 21, bg = colors[model_data$class], 
+     col = colors[model_data$class], asp = 1, xlab='property 1', ylab='property 2', main = '5WNN')
+
+
+z <- c(2, 2)
+xl <- model_data
+class <- kWNN(xl, z, k=5, q=0.8)
 points(z[1], z[2], pch = 22, bg = colors[class], asp = 1)
 
 
