@@ -39,14 +39,17 @@ kWNN <- function(xl, z, k, q){
   return (class)
 }
 
+layout(matrix(c(1,1,2,2,0,3,3,0), 2, 4, byrow = TRUE), 
+       widths=c(1,1,1,1), heights=c(1,1))
+
 iris30 = read.table("/Users/khurshudov/Desktop/SMPR/metric_classification/iris30.txt", sep="\t", header=TRUE)
 # iris30 = iris[sample(c(1:150), 30, replace=FALSE),3:5]
 
 
 colors <- c("setosa" = "red", "versicolor" = "green3",
             "virginica" = "blue")
-plot(iris30[, 1:2], pch = 21, bg = colors[iris30$Species], col
-     = colors[iris30$Species], asp = 1)
+# plot(iris30[, 1:2], pch = 21, bg = colors[iris30$Species], col
+#      = colors[iris30$Species], asp = 1)
 
 
 # z <- c(6, 1.6)
@@ -74,6 +77,8 @@ lines(c(1:length(iris30[,1])), loo_k, type="l", pch=22, lty=1, col="red")
 
 opt_k = which.min(loo_k)
 
+points(which.min(loo_k), min(loo_k), pch=21, bg = 'red', col = 'red')
+
 ## selecting q by LOO
 loo_q <- c()
 
@@ -96,6 +101,8 @@ lines(q_seq, loo_q, type="l", pch=22, lty=1, col="red")
 
 opt_q = q_seq[which.min(loo_q)]
 
+points(q_seq[which.min(loo_q)], min(loo_q), pch=21, bg = 'red', col = 'red')
+
 plot(iris30[, 1:2], pch = 21, bg = colors[iris30$Species], col
      = colors[iris30$Species], asp = 1, main='kWNN', xlab = 'petal length', ylab = 'petal width')
 
@@ -116,9 +123,9 @@ iris_test30 = iris[sample(c(1:150), 30, replace=FALSE),]
 accuracy_kNN <- 0
 accuracy_kWNN <- 0
 
-for (i in c(1:length(iris_test30))){
+for (i in c(1:length(iris_test30[,1]))){
   xl = iris30[,1:3]
-  class_kNN <- kWNN(xl, iris_test30[i,3:4], k=opt_k, q=1)
+  class_kNN <- kWNN(xl, iris_test30[i,3:4], k=5, q=1)
   class_kWNN <- kWNN(xl, iris_test30[i,3:4], k=opt_k, q=opt_q)
   if(iris_test30[i,5] == class_kNN){
     accuracy_kNN <- accuracy_kNN + 1
@@ -127,7 +134,7 @@ for (i in c(1:length(iris_test30))){
     accuracy_kWNN <- accuracy_kWNN + 1
   }
 }
-print(accuracy_kNN)
-print(accuracy_kWNN)
+print(accuracy_kNN / length(iris_test30[,1]))
+print(accuracy_kWNN / length(iris_test30[,1]))
 
 
