@@ -111,7 +111,7 @@ points_array <- c()
 for (xtmp in seq(0, 7, by=0.1)){
   for (ytmp in seq(0, 3, by=0.1)){
     z <- c(xtmp,ytmp)
-    class <- kWNN(xl, z, opt_k, opt_q)
+    class <- kWNN(xl, z, opt_k, 0.5)
     points_array <- c(points_array, c(z))
     points(z[1], z[2], pch = 1, col = colors[class])
   }

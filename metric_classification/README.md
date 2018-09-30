@@ -110,3 +110,35 @@
 <img src="1NN/1NN_classification_card.png">
 <img src="KNN/5NN_classification_card.png">
 <img src="kWNN(with LOO)/kWNN_classification_card.png">
+
+
+<h2>Parsen window</h2>
+<h3>Rectangle kernel</h3>
+<h2>K(h)=П(h)=1/2[|h|<=1]</h2>
+<h2>opt_h = 0.6!!! loo(opt_h) = 0.03333333</h2>
+<h2>Accuracy: 0.9666667</h2>
+<img src="Parsen/Rectangle.png">
+
+<h3>Gaussian kernel</h3>
+<h2>K(h)=П(h)=1/2[|h|<=1]</h2>
+<h2>opt_h = 0.1!!! loo(opt_h) = 0.03333333</h2>
+<h2>Accuracy: 0.9666667</h2>
+<img src="Parsen/Gaussian.png">
+
+<h3>Epanechnikov kernel</h3>
+<h2>K(h)=П(h)=1/2[|h|<=1]</h2>
+<h2>opt_h = 0.6!!! loo(opt_h) = 0.03333333</h2>
+<h2>Accuracy: 1</h2>
+<img src="Parsen/Epanechnikov.png">
+
+<h3>Quart kernel</h3>
+<h2>K(h)=П(h)=1/2[|h|<=1]</h2>
+<h2>opt_h = 0.6!!! loo(opt_h) = 0.03333333</h2>
+<h2>Accuracy: 1</h2>
+<img src="Parsen/Quart.png">
+
+<h3>Triangle kernel</h3>
+<h2>K(h)=П(h)=1/2[|h|<=1]</h2>
+<h2>opt_h = 0.6!!! loo(opt_h) = 0.03333333</h2>
+<h2>Accuracy: 1</h2>
+<img src="Parsen/Triangle.png">
