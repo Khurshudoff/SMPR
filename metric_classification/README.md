@@ -114,31 +114,31 @@
 
 <h2>Parsen window</h2>
 <h3>Rectangle kernel</h3>
-<h4>K(h)=П(h)=1/2[|h|<=1]</h4>
-<h4>opt_h = 0.6!!! loo(opt_h) = 0.03333333</h4>
+<a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;\frac{1}{2}[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;\frac{1}{2}[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" title="K(r) = \frac{1}{2}[\left | r \right | \leq 1]" /></a>
+<h4>opt_h = 0.6 <br> loo(opt_h) = 0.03333333</h4>
 <h4>Accuracy: 0.9666667</h4>
-<img src="Parsen/Rectangle.png">
+<img src="Parsen/rectangle.png">
 
 <h3>Gaussian kernel</h3>
-<h4>K(h)=П(h)=1/2[|h|<=1]</h4>
-<h4>opt_h = 0.1!!! loo(opt_h) = 0.03333333</h4>
+<a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;(2\pi)^{\frac{1}{2}}e^{(-\frac{1}{2}&space;r^2)}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;(2\pi)^{\frac{1}{2}}e^{(-\frac{1}{2}&space;r^2)}" title="K(r) = (2\pi)^{\frac{1}{2}}e^{(-\frac{1}{2} r^2)}" /></a>
+<h4>opt_h = 0.1 <br> loo(opt_h) = 0.03333333</h4>
 <h4>Accuracy: 0.9666667</h4>
 <img src="Parsen/Gaussian.png">
 
 <h3>Epanechnikov kernel</h3>
-<h4>K(h)=П(h)=1/2[|h|<=1]</h4>
-<h4>opt_h = 0.6!!! loo(opt_h) = 0.03333333</h4>
+<a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;\frac{3}{4}(1-r^2)[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;\frac{3}{4}(1-r^2)[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" title="K(r) = \frac{3}{4}(1-r^2)[\left | r \right | \leq 1]" /></a>
+<h4>opt_h = 0.6 <br> loo(opt_h) = 0.03333333</h4>
 <h4>Accuracy: 1</h4>
 <img src="Parsen/Epanechnikov.png">
 
 <h3>Quart kernel</h3>
-<h4>K(h)=П(h)=1/2[|h|<=1]</h4>
-<h4>opt_h = 0.6!!! loo(opt_h) = 0.03333333</h4>
+<a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;\frac{15}{16}(1-r^2)^2[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;\frac{15}{16}(1-r^2)^2[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" title="K(r) = \frac{15}{16}(1-r^2)^2[\left | r \right | \leq 1]" /></a>
+<h4>opt_h = 0.6 <br> loo(opt_h) = 0.03333333</h4>
 <h4>Accuracy: 1</h4>
 <img src="Parsen/Quart.png">
 
 <h3>Triangle kernel</h3>
-<h4>K(h)=П(h)=1/2[|h|<=1]</h4>
-<h4>opt_h = 0.6!!! loo(opt_h) = 0.03333333</h4>
+<a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;(1-\left&space;|&space;r&space;\right&space;|)[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;(1-\left&space;|&space;r&space;\right&space;|)[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" title="K(r) = (1-\left | r \right |)[\left | r \right | \leq 1]" /></a>
+<h4>opt_h = 0.6 <br> loo(opt_h) = 0.03333333</h4>
 <h4>Accuracy: 1</h4>
 <img src="Parsen/Triangle.png">
