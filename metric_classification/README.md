@@ -155,7 +155,10 @@ K(r) - ядро, не возрастает и положительно на [0,1
 
 <h3>Прямоугольное ядро</h3>
 <a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;\frac{1}{2}[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;\frac{1}{2}[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" title="K(r) = \frac{1}{2}[\left | r \right | \leq 1]" /></a>
-<code lang="R">
+
+<!-- Rect kernel code -->
+<code>
+	
 	kernelRectangle <- function(x, y, metricFunction, h){
 	  r = metricFunction(x,y) / h
 	  if(r <= 1){
@@ -164,30 +167,76 @@ K(r) - ядро, не возрастает и положительно на [0,1
 	  return(0)
 	}
 </code>
+
 <h4>opt_h = 0.6 <br> loo(opt_h) = 0.03333333</h4>
 <h4>Точность: 0.9666667</h4>
 <img src="Parsen/rectangle.png">
 
 <h3>Гауссовское ядро</h3>
 <a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;(2\pi)^{\frac{1}{2}}e^{(-\frac{1}{2}&space;r^2)}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;(2\pi)^{\frac{1}{2}}e^{(-\frac{1}{2}&space;r^2)}" title="K(r) = (2\pi)^{\frac{1}{2}}e^{(-\frac{1}{2} r^2)}" /></a>
+<!-- gaussian kernel code -->
+<code>
+	
+	kernelGaussian <- function(x, y, metricFunction, h){
+	  r = metricFunction(x,y) / h
+	  return(((2*pi)^(-1/2)) * exp(-1/2*r^2))
+	}
+</code>
+
 <h4>opt_h = 0.1 <br> loo(opt_h) = 0.03333333</h4>
 <h4>Точность: 0.9666667</h4>
 <img src="Parsen/Gaussian.png">
 
 <h3>Ядро Епанечникова</h3>
 <a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;\frac{3}{4}(1-r^2)[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;\frac{3}{4}(1-r^2)[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" title="K(r) = \frac{3}{4}(1-r^2)[\left | r \right | \leq 1]" /></a>
+<!-- epan kernel code -->
+<code>
+	
+	kernelEpanechnikov <- function(x, y, metricFunction, h){
+	  r = metricFunction(x,y) / h
+	  if(r<=1){
+	    return(3/4*(1-r^2))
+	  }
+	  return(0)
+	  
+	}
+</code>
+
 <h4>opt_h = 0.6 <br> loo(opt_h) = 0.03333333</h4>
 <h4>Точность: 1</h4>
 <img src="Parsen/Epanechnikov.png">
 
 <h3>Квартическое ядро</h3>
 <a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;\frac{15}{16}(1-r^2)^2[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;\frac{15}{16}(1-r^2)^2[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" title="K(r) = \frac{15}{16}(1-r^2)^2[\left | r \right | \leq 1]" /></a>
+<!-- quart kernel code -->
+<code>
+	
+	kernelQuart <- function(x, y, metricFunction, h){
+	  r = metricFunction(x,y) / h
+	  if(r<=1){
+	    return(15/15*(1-r^2)^2)
+	  }
+	  return(0)
+	  
+	}
+</code>
 <h4>opt_h = 0.6 <br> loo(opt_h) = 0.03333333</h4>
 <h4>Точность: 1</h4>
 <img src="Parsen/Quart.png">
 
 <h3>Треугольное ядро</h3>
 <a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;(1-\left&space;|&space;r&space;\right&space;|)[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;(1-\left&space;|&space;r&space;\right&space;|)[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" title="K(r) = (1-\left | r \right |)[\left | r \right | \leq 1]" /></a>
+<!-- triangle kernel code -->
+<code>
+	
+	kernelTriangle <- function(x, y, metricFunction, h){
+	  r = metricFunction(x,y) / h
+	  if(r<=1){
+	    return(1-abs(r))
+	  }
+	  return(0)
+	}
+</code>
 <h4>opt_h = 0.6 <br> loo(opt_h) = 0.03333333</h4>
 <h4>Точность: 1</h4>
 <img src="Parsen/Triangle.png">
