@@ -78,6 +78,38 @@
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=LOO(k,&space;X^l&space;)=&space;\sum_{i=1}^{l}&space;\left&space;[&space;a(x_i;&space;X^l\setminus&space;\lbrace&space;x_i&space;\rbrace&space;,&space;k)&space;\neq&space;y_i&space;\right&space;]&space;\rightarrow&space;\min_k&space;." target="_blank"><img src="https://latex.codecogs.com/gif.latex?LOO(k,&space;X^l&space;)=&space;\sum_{i=1}^{l}&space;\left&space;[&space;a(x_i;&space;X^l\setminus&space;\lbrace&space;x_i&space;\rbrace&space;,&space;k)&space;\neq&space;y_i&space;\right&space;]&space;\rightarrow&space;\min_k&space;." title="LOO(k, X^l )= \sum_{i=1}^{l} \left [ a(x_i; X^l\setminus \lbrace x_i \rbrace , k) \neq y_i \right ] \rightarrow \min_k ." /></a>
 
+<!-- knn loo optimized code -->
+<code>
+
+	looFuncOpt <- function(opt_param_min, opt_param_max, opt_param_step, data, class_func){
+
+	  count_missclassif = c(rep(0, length( seq(opt_param_min, opt_param_max, opt_param_step))))
+
+	  for(i in c(1:length(data[,1]) ) ){
+	    xl <- data[-i,] # train data
+	    z <- data[i,1:2] # object to classify
+	    
+	    orderedXl <- sortObjectsByDist(xl, z) # data sorted by distance to z
+	    
+	    n <- dim(orderedXl)[2] - 1 
+	    
+	    index = 1;
+	    
+	    for (opt_param in seq(opt_param_min, opt_param_max, opt_param_step)){
+	      classes <- orderedXl[1:opt_param, n+1]
+	      count <- table(classes)
+	      class <- names(which.max(count))
+	      if(class != data[i,3]){
+	        count_missclassif[index] = count_missclassif[index] + 1
+	      }
+	      index = index + 1
+	    }  
+	  }  
+	  
+	  return(count_missclassif / 30)
+	}
+</code>
+
 <img src="LOO/LOO.png">
 
 <h2>kWNN</h2>
@@ -120,32 +152,42 @@ K(r) - ядро, не возрастает и положительно на [0,1
 <br>
 <a href="https://www.codecogs.com/eqnedit.php?latex=a(x;X^l,h,K)&space;=&space;\arg&space;\max_{y\in&space;Y}&space;{\sum_{i=1}^l{[y_i=y]&space;K\left(&space;\frac{\rho&space;(x,x_i)}{h}&space;\right)}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?a(x;X^l,h,K)&space;=&space;\arg&space;\max_{y\in&space;Y}&space;{\sum_{i=1}^l{[y_i=y]&space;K\left(&space;\frac{\rho&space;(x,x_i)}{h}&space;\right)}}" title="a(x;X^l,h,K) = \arg \max_{y\in Y} {\sum_{i=1}^l{[y_i=y] K\left( \frac{\rho (x,x_i)}{h} \right)}}" /></a>
 
-<h3>Rectangle kernel</h3>
+
+<h3>Прямоугольное ядро</h3>
 <a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;\frac{1}{2}[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;\frac{1}{2}[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" title="K(r) = \frac{1}{2}[\left | r \right | \leq 1]" /></a>
+<code lang="R">
+	kernelRectangle <- function(x, y, metricFunction, h){
+	  r = metricFunction(x,y) / h
+	  if(r <= 1){
+	    return(1/2)
+	  } 
+	  return(0)
+	}
+</code>
 <h4>opt_h = 0.6 <br> loo(opt_h) = 0.03333333</h4>
-<h4>Accuracy: 0.9666667</h4>
+<h4>Точность: 0.9666667</h4>
 <img src="Parsen/rectangle.png">
 
-<h3>Gaussian kernel</h3>
+<h3>Гауссовское ядро</h3>
 <a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;(2\pi)^{\frac{1}{2}}e^{(-\frac{1}{2}&space;r^2)}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;(2\pi)^{\frac{1}{2}}e^{(-\frac{1}{2}&space;r^2)}" title="K(r) = (2\pi)^{\frac{1}{2}}e^{(-\frac{1}{2} r^2)}" /></a>
 <h4>opt_h = 0.1 <br> loo(opt_h) = 0.03333333</h4>
-<h4>Accuracy: 0.9666667</h4>
+<h4>Точность: 0.9666667</h4>
 <img src="Parsen/Gaussian.png">
 
-<h3>Epanechnikov kernel</h3>
+<h3>Ядро Епанечникова</h3>
 <a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;\frac{3}{4}(1-r^2)[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;\frac{3}{4}(1-r^2)[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" title="K(r) = \frac{3}{4}(1-r^2)[\left | r \right | \leq 1]" /></a>
 <h4>opt_h = 0.6 <br> loo(opt_h) = 0.03333333</h4>
-<h4>Accuracy: 1</h4>
+<h4>Точность: 1</h4>
 <img src="Parsen/Epanechnikov.png">
 
-<h3>Quart kernel</h3>
+<h3>Квартическое ядро</h3>
 <a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;\frac{15}{16}(1-r^2)^2[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;\frac{15}{16}(1-r^2)^2[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" title="K(r) = \frac{15}{16}(1-r^2)^2[\left | r \right | \leq 1]" /></a>
 <h4>opt_h = 0.6 <br> loo(opt_h) = 0.03333333</h4>
-<h4>Accuracy: 1</h4>
+<h4>Точность: 1</h4>
 <img src="Parsen/Quart.png">
 
-<h3>Triangle kernel</h3>
+<h3>Треугольное ядро</h3>
 <a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;(1-\left&space;|&space;r&space;\right&space;|)[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;(1-\left&space;|&space;r&space;\right&space;|)[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" title="K(r) = (1-\left | r \right |)[\left | r \right | \leq 1]" /></a>
 <h4>opt_h = 0.6 <br> loo(opt_h) = 0.03333333</h4>
-<h4>Accuracy: 1</h4>
+<h4>Точность: 1</h4>
 <img src="Parsen/Triangle.png">
