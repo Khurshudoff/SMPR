@@ -279,3 +279,44 @@ for (xtmp in seq(0, 7, by=0.1)){
     points(z[1], z[2], pch = 1, col = colors[class])
   }
 }
+
+test <- function(){
+  iris_test30 = iris[sample(c(1:150), 30, replace=FALSE),]
+  
+  accuracy_rect <- 0
+  accuracy_gaus <- 0
+  accuracy_epan <- 0
+  accuracy_quar <- 0
+  accuracy_tria <- 0
+  
+  for (i in c(1:length(iris_test30[,1]))){
+    xl = iris30[,1:3]
+    class_rect <- parsen(xl, iris_test30[i,3:4], h=0.6, kernel=kernelRecktangle)
+    class_gaus <- parsen(xl, iris_test30[i,3:4], h=0.1, kernel=kernelGaussian)
+    class_epan <- parsen(xl, iris_test30[i,3:4], h=0.6, kernel=kernelEpanechnikov)
+    class_quar <- parsen(xl, iris_test30[i,3:4], h=0.6, kernel=kernelQuart)
+    class_tria <- parsen(xl, iris_test30[i,3:4], h=0.6, kernel=kernelTriangle)
+    if(iris_test30[i,5] == class_rect){
+      accuracy_rect <- accuracy_rect + 1
+    }
+    if(iris_test30[i,5] == class_gaus){
+      accuracy_gaus <- accuracy_gaus + 1
+    }
+    if(iris_test30[i,5] == class_epan){
+      accuracy_epan <- accuracy_epan + 1
+    }
+    if(iris_test30[i,5] == class_quar){
+      accuracy_quar <- accuracy_quar + 1
+    }
+    if(iris_test30[i,5] == class_tria){
+      accuracy_tria <- accuracy_tria + 1
+    }
+  }
+  print(accuracy_rect / length(iris_test30[,1]))
+  print(accuracy_gaus / length(iris_test30[,1]))
+  print(accuracy_epan / length(iris_test30[,1]))
+  print(accuracy_quar / length(iris_test30[,1]))
+  print(accuracy_tria / length(iris_test30[,1]))
+}
+
+test()
