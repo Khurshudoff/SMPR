@@ -103,18 +103,31 @@ lines(c(1:30), loo, type="l", pch=22, lty=1, col="red")
 
 opt_k = which.min(loo)
 
-points(which.min(loo), min(loo), pch=21, bg = 'red', col = 'red')
+iris30_test = read.table("/Users/khurshudov/Desktop/SMPR/metric_classification/iris30_test.txt", sep="\t", header=TRUE)
+accuracy = 0
 
-plot(iris30[, 1:2], pch = 21, bg = colors[iris30$Species], col
-    = colors[iris30$Species], asp = 1, main='1NN', xlab = 'petal length', ylab = 'petal width')
-
-points_array <- c()
-
-for (xtmp in seq(0, 7, by=0.1)){
- for (ytmp in seq(0, 3, by=0.1)){
-   z <- c(xtmp,ytmp)
-   class <- kNN(xl, z, opt_k)
-   points_array <- c(points_array, c(z))
-   points(z[1], z[2], pch = 1, col = colors[class])
- }
+for(i in c(1:length(iris30_test[,1]))){
+  z <- iris30_test[i,1:2]
+  class <- kNN(iris30, z, opt_k)
+  if(class == iris30_test[i,3]){
+    accuracy = accuracy + 1
+  }
 }
+
+print(accuracy/length(iris30_test[,1]))
+
+# points(which.min(loo), min(loo), pch=21, bg = 'red', col = 'red')
+# 
+# plot(iris30[, 1:2], pch = 21, bg = colors[iris30$Species], col
+#     = colors[iris30$Species], asp = 1, main='1NN', xlab = 'petal length', ylab = 'petal width')
+# 
+# points_array <- c()
+# 
+# for (xtmp in seq(0, 7, by=0.1)){
+#  for (ytmp in seq(0, 3, by=0.1)){
+#    z <- c(xtmp,ytmp)
+#    class <- kNN(xl, z, opt_k)
+#    points_array <- c(points_array, c(z))
+#    points(z[1], z[2], pch = 1, col = colors[class])
+#  }
+# }

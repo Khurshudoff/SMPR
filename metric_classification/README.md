@@ -185,6 +185,22 @@
 
 <img src="kWNN(model)/kWNN_model.png">
 
+<h2>Сравнение качества алгоритмов</h2>
+<table>
+  <tbody>
+    <tr>
+      <td></td>
+      <td>kNN</td>
+      <td>kWNN</td>
+    </tr>
+    <tr>
+      <td>Точность</td>
+      <td>0.9</td>
+      <td>0.9</td>
+    </tr>
+  </tbody>
+</table>
+
 <h2>Сравнение карт классификации</h2>
 
 <img src="1NN/1NN_classification_card.png">
