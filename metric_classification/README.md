@@ -116,6 +116,54 @@
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=$w(i,x)&space;=&space;[i&space;\leq&space;k]w_i$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$w(i,x)&space;=&space;[i&space;\leq&space;k]w_i$" title="$w(i,x) = [i \leq k]w_i$" /></a> - метод k weight NN
 
+<!-- code of kwnn with loo -->
+<code>
+	
+	looFuncOptKwnn <- function(k_min, k_max, k_step, q_min, q_max, q_step, data, class_func){
+  
+	  seq_k = seq(k_min, k_max, k_step)
+	  seq_q = seq(q_min, q_max, q_step)
+	  
+	  count_missclassif = matrix( rep( 0, len=length(seq_k)*length(seq_q)), nrow = length(seq_k))
+
+	  # print(length(seq_k)*length(seq_q))
+	  
+	  for(i in c(1:length(data[,1]) ) ){
+	    xl <- data[-i,] # train data
+	    z <- data[i,1:2] # object to classify
+	    
+	    orderedXl <- sortObjectsByDist(xl, z) # data sorted by distance to z
+	    
+	    n <- dim(orderedXl)[2] - 1 
+	    
+	    index_k = 1;
+	    
+	    for (k in seq_k){
+	        index_q = 1
+	        
+	        classes <- orderedXl[1:k, n+1]
+	        for(q in seq_q){
+	            d <- c(0.0,0.0,0.0)
+	            names(d) <- c("setosa", "versicolor", "virginica")
+	            
+	            for (j in c(1:length(classes))){
+	              d[classes[j]] <- d[classes[j]] + weight(j, q)
+	            }
+	            
+	            class <- names(which.max(d))
+	            
+	            if(class != data[i,3]){
+	              count_missclassif[index_k, index_q] = count_missclassif[index_k, index_q] + 1
+	            }
+	            index_q = index_q + 1
+	        }  
+	      index_k = index_k + 1
+	    }  
+	  }
+	  return(count_missclassif / 30)
+	}
+</code>
+
 <a href="https://www.codecogs.com/eqnedit.php?latex=$w_i&space;=&space;q^i$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$w_i&space;=&space;q^i$" title="$w_i = q^i$" /></a>
 
 <h3> Плюсы </h3>
