@@ -52,8 +52,75 @@ parsen <- function(xl, z, h, metricFunction=euclideanDistance, kernel){
     curObjClass = xl[i, n+1]
     d[curObjClass] <- d[curObjClass] + kernel(xl[i,1:n], z, metricFunction, h)
   }
+  if(sum(d) == 0){
+    return("unknown")
+  } else {
+    return (names(which.max(d)))  
+  }
+}
+
+looFunc <- function(mySeq, iris30){
+  loo_h <- c()
   
-  return (names(which.max(d)))
+  for (h in mySeq){
+    count = 0
+    for (i in c(1:length(xl[,1]))){
+      xl = iris30[-i,1:3]
+      class <- parsen(xl, iris30[i,1:2], h=h, kernel=kernelRectangle)
+      if(iris30[i,3] != class){
+        count <- count + 1
+      }
+    }
+    loo_h <- c(loo_h, count/length(xl[,1]))
+  }
+  return(loo_h)
+}
+
+drawPlots <- function(kernel, kernelName){
+  mySeq <- seq(0.1,2,by=0.05)
+  
+  loo_h <- looFunc(mySeq, iris30)
+  
+  opt_h = mySeq[which.min(loo_h)]
+  
+  print(opt_h)
+  print(min(loo_h))
+  
+  plot(mySeq, 
+       loo_h, 
+       'p', 
+       col='blue',
+       xlab='h',
+       ylab='loo',
+       main='optimization h with loo',
+       cex.main=0.8)
+  lines(mySeq, 
+        loo_h, 
+        type="l", 
+        pch=22, 
+        lty=1, 
+        col="red")
+  
+  points(mySeq[which.min(loo_h)], min(loo_h), pch=21, bg = 'red', col = 'red')
+  
+  plot(iris30[, 1:2], 
+       pch = 21, 
+       bg = colors[iris30$Species], 
+       col = colors[iris30$Species], 
+       asp = 1,
+       xlab='petal length',
+       ylab='petal width',
+       main=paste(c('parsen', kernelName, 'opt_h =', opt_h)),
+       cex.main=0.8)
+  
+  for (xtmp in seq(0, 7, by=0.1)){
+    for (ytmp in seq(0, 3, by=0.1)){
+      z <- c(xtmp,ytmp)
+      class <- parsen(xl, z, h=opt_h, kernel=kernel)
+      points_array <- c(points_array, c(z))
+      points(z[1], z[2], pch = 1, col = colors[class])
+    }
+  }
 }
 
 layout(matrix(c(1,2), 1, 2, byrow = TRUE),
@@ -63,7 +130,7 @@ layout(matrix(c(1,2), 1, 2, byrow = TRUE),
 iris30 = read.table("/Users/khurshudov/Desktop/SMPR/metric_classification/iris30.txt", sep="\t", header=TRUE)
 
 colors <- c("setosa" = "red", "versicolor" = "green3",
-            "virginica" = "blue")
+            "virginica" = "blue", "unknown" = "grey")
 
 xl <- iris30[, 1:3]
 
@@ -75,210 +142,12 @@ points_array <- c()
 
 ## LOO
 
-mySeq <- seq(0.1,2,by=0.05)
 
-loo_h <- c()
-
-for (h in mySeq){
-  count = 0
-  for (i in c(1:30)){
-    xl = iris30[-i,1:3]
-    class <- parsen(xl, iris30[i,1:2], h=h, kernel=kernelRectangle)
-    if(iris30[i,3] != class){
-      count <- count + 1
-    }
-  }
-  loo_h <- c(loo_h, count/30)
-}
-
-opt_h = mySeq[which.min(loo_h)]
-
-print(opt_h)
-print(min(loo_h))
-
-plot(mySeq, 
-     loo_h, 
-     'p', 
-     col='blue',
-     xlab='h',
-     ylab='loo',
-     main='optimization h with loo',
-     cex.main=0.8)
-lines(mySeq, 
-      loo_h, 
-      type="l", 
-      pch=22, 
-      lty=1, 
-      col="red")
-
-points(mySeq[which.min(loo_h)], min(loo_h), pch=21, bg = 'red', col = 'red')
-
-plot(iris30[, 1:2], 
-     pch = 21, 
-     bg = colors[iris30$Species], 
-     col = colors[iris30$Species], 
-     asp = 1,
-     xlab='petal length',
-     ylab='petal width',
-     main=paste('parsen Rectangle kernel, opt_h = ',opt_h),
-     cex.main=0.8)
-
-for (xtmp in seq(0, 7, by=0.1)){
-  for (ytmp in seq(0, 3, by=0.1)){
-    z <- c(xtmp,ytmp)
-    class <- parsen(xl, z, h=opt_h, kernel=kernelRecktangle)
-    points_array <- c(points_array, c(z))
-    points(z[1], z[2], pch = 1, col = colors[class])
-  }
-}
-
-# /////////////////////////////////////////////////////////
-
-loo_h <- c()
-
-for (h in mySeq){
-  count = 0
-  for (i in c(1:30)){
-    xl = iris30[-i,1:3]
-    class <- parsen(xl, iris30[i,1:2], h=h, kernel=kernelGaussian)
-    if(iris30[i,3] != class){
-      count <- count + 1
-    }
-  }
-  loo_h <- c(loo_h, count/30)
-}
-
-opt_h = mySeq[which.min(loo_h)]
-
-print(opt_h)
-print(min(loo_h))
-
-plot(mySeq,loo_h,'p', col='blue',xlab='h',ylab='loo',main='optimization h with loo',cex.main=0.8)
-lines(mySeq, loo_h, type="l", pch=22, lty=1, col="red")
-
-points(mySeq[which.min(loo_h)], min(loo_h), pch=21, bg = 'red', col = 'red')
-
-plot(iris30[, 1:2], pch = 21, bg = colors[iris30$Species], col = colors[iris30$Species], asp = 1,xlab='petal length',ylab='petal width',main=paste('parsen Gaussian kernel, opt_h = ',opt_h),cex.main=0.8)
-
-for (xtmp in seq(0, 7, by=0.1)){
-  for (ytmp in seq(0, 3, by=0.1)){
-    z <- c(xtmp,ytmp)
-    class <- parsen(xl, z, h=opt_h, kernel=kernelGaussian)
-    points_array <- c(points_array, c(z))
-    points(z[1], z[2], pch = 1, col = colors[class])
-  }
-}
-
-# /////////////////////////////////////////////////////////
-
-loo_h <- c()
-
-for (h in mySeq){
-  count = 0
-  for (i in c(1:30)){
-    xl = iris30[-i,1:3]
-    class <- parsen(xl, iris30[i,1:2], h=h, kernel=kernelEpanechnikov)
-    if(iris30[i,3] != class){
-      count <- count + 1
-    }
-  }
-  loo_h <- c(loo_h, count/30)
-}
-
-opt_h = mySeq[which.min(loo_h)]
-
-print(opt_h)
-print(min(loo_h))
-
-plot(mySeq,loo_h,'p', col='blue',xlab='h',ylab='loo',main='optimization h with loo',cex.main=0.8)
-lines(mySeq, loo_h, type="l", pch=22, lty=1, col="red")
-
-points(mySeq[which.min(loo_h)], min(loo_h), pch=21, bg = 'red', col = 'red')
-
-plot(iris30[, 1:2], pch = 21, bg = colors[iris30$Species], col = colors[iris30$Species], asp = 1,xlab='petal length',ylab='petal width',main=paste('parsen Epanechnikov kernel, opt_h = ',opt_h),cex.main=0.8)
-
-for (xtmp in seq(0, 7, by=0.1)){
-  for (ytmp in seq(0, 3, by=0.1)){
-    z <- c(xtmp,ytmp)
-    class <- parsen(xl, z, h=opt_h, kernel=kernelEpanechnikov)
-    points_array <- c(points_array, c(z))
-    points(z[1], z[2], pch = 1, col = colors[class])
-  }
-}
-
-# /////////////////////////////////////////////////////////
-
-loo_h <- c()
-
-for (h in mySeq){
-  count = 0
-  for (i in c(1:30)){
-    xl = iris30[-i,1:3]
-    class <- parsen(xl, iris30[i,1:2], h=h, kernel=kernelQuart)
-    if(iris30[i,3] != class){
-      count <- count + 1
-    }
-  }
-  loo_h <- c(loo_h, count/30)
-}
-
-opt_h = mySeq[which.min(loo_h)]
-
-print(opt_h)
-print(min(loo_h))
-
-plot(mySeq,loo_h,'p', col='blue',xlab='h',ylab='loo',main='optimization h with loo',cex.main=0.8)
-lines(mySeq, loo_h, type="l", pch=22, lty=1, col="red")
-
-points(mySeq[which.min(loo_h)], min(loo_h), pch=21, bg = 'red', col = 'red')
-
-plot(iris30[, 1:2], pch = 21, bg = colors[iris30$Species], col = colors[iris30$Species], asp = 1,xlab='petal length',ylab='petal width',main=paste('parsen Quart kernel, opt_h = ',opt_h),cex.main=0.8)
-
-for (xtmp in seq(0, 7, by=0.1)){
-  for (ytmp in seq(0, 3, by=0.1)){
-    z <- c(xtmp,ytmp)
-    class <- parsen(xl, z, h=opt_h, kernel=kernelQuart)
-    points_array <- c(points_array, c(z))
-    points(z[1], z[2], pch = 1, col = colors[class])
-  }
-}
-
-# /////////////////////////////////////////////////////////
-
-loo_h <- c()
-
-for (h in mySeq){
-  count = 0
-  for (i in c(1:30)){
-    xl = iris30[-i,1:3]
-    class <- parsen(xl, iris30[i,1:2], h=h, kernel=kernelTriangle)
-    if(iris30[i,3] != class){
-      count <- count + 1
-    }
-  }
-  loo_h <- c(loo_h, count/30)
-}
-
-opt_h = mySeq[which.min(loo_h)]
-
-print(opt_h)
-print(min(loo_h))
-
-plot(mySeq,loo_h,'p', col='blue',xlab='h',ylab='loo',main='optimization h with loo',cex.main=0.8)
-lines(mySeq, loo_h, type="l", pch=22, lty=1, col="red")
-
-points(mySeq[which.min(loo_h)], min(loo_h), pch=21, bg = 'red', col = 'red')
-
-plot(iris30[, 1:2], pch = 21, bg = colors[iris30$Species], col = colors[iris30$Species], asp = 1,xlab='petal length',ylab='petal width',main=paste('parsen Triangle kernel, opt_h = ',opt_h),cex.main=0.8)
-
-for (xtmp in seq(0, 7, by=0.1)){
-  for (ytmp in seq(0, 3, by=0.1)){
-    z <- c(xtmp,ytmp)
-    class <- parsen(xl, z, h=opt_h, kernel=kernelTriangle)
-    points_array <- c(points_array, c(z))
-    points(z[1], z[2], pch = 1, col = colors[class])
-  }
-}
+drawPlots(kernelRectangle, 'kernel Rectangle')
+drawPlots(kernelGaussian, 'kernel Gaussian')
+drawPlots(kernelEpanechnikov, 'kernel Epanechnikov')
+drawPlots(kernelQuart, 'kernel Quart')
+drawPlots(kernelTriangle, 'kernel Triangle')
 
 test <- function(){
   iris_test30 = iris[sample(c(1:150), 30, replace=FALSE),]
@@ -291,7 +160,7 @@ test <- function(){
   
   for (i in c(1:length(iris_test30[,1]))){
     xl = iris30[,1:3]
-    class_rect <- parsen(xl, iris_test30[i,3:4], h=0.6, kernel=kernelRecktangle)
+    class_rect <- parsen(xl, iris_test30[i,3:4], h=0.6, kernel=kernelRectangle)
     class_gaus <- parsen(xl, iris_test30[i,3:4], h=0.1, kernel=kernelGaussian)
     class_epan <- parsen(xl, iris_test30[i,3:4], h=0.6, kernel=kernelEpanechnikov)
     class_quar <- parsen(xl, iris_test30[i,3:4], h=0.6, kernel=kernelQuart)
