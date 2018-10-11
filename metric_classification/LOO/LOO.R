@@ -46,6 +46,7 @@ looFuncOpt <- function(opt_param_min, opt_param_max, opt_param_step, data, class
       classes <- orderedXl[1:opt_param, n+1]
       count <- table(classes)
       class <- names(which.max(count))
+      
       if(class != data[i,3]){
         count_missclassif[index] = count_missclassif[index] + 1
       }
@@ -53,7 +54,7 @@ looFuncOpt <- function(opt_param_min, opt_param_max, opt_param_step, data, class
     }  
   }  
   
-  return(count_missclassif / 30)
+  return(count_missclassif)
 }
 
 looFunc <- function(opt_param_min, opt_param_max, opt_param_step, data, class_func){
@@ -66,44 +67,35 @@ looFunc <- function(opt_param_min, opt_param_max, opt_param_step, data, class_fu
         count <- count + 1
       }
     }
-    loo <- c(loo, count/30)
+    loo <- c(loo, count)
   }
   
   return(loo)
 }
 
-iris30 = read.table("/Users/khurshudov/Desktop/SMPR/metric_classification/iris30.txt", sep="\t", header=TRUE)
+par(mfrow=c(1,1))
+
+iris30 = iris[3:5]
 
 colors <- c("setosa" = "red", "versicolor" = "green3",
             "virginica" = "blue")
-#plot(iris30[, 1:2], pch = 21, bg = colors[iris30$Species], col
-#     = colors[iris30$Species], asp = 1)
-
-
-# z <- c(2.7, 1)
-# xl <- iris30[, 1:3]
-# class <- kNN(xl, z, k=6)
-# points(z[1], z[2], pch = 22, bg = colors[class], asp = 1)
 
 loo <- c()
 
-loo <- looFuncOpt(1, 30, 1, iris30, kNN)
+loo <- looFuncOpt(1, length(iris30[,1]), 1, iris30, kNN) / length(iris30[,1])
 
-
-
-par(mfrow=c(1,2))
-
-plot(c(1:30),
+plot(c(1:length(iris30[,1])),
      loo,
      'p',
      col='blue',
      xlab='k',
      ylab='loo')
-lines(c(1:30), loo, type="l", pch=22, lty=1, col="red")
+lines(c(1:length(iris30[,1])), loo, type="l", pch=22, lty=1, col="red")
 
 opt_k = which.min(loo)
+print(opt_k)
 
-iris30_test = read.table("/Users/khurshudov/Desktop/SMPR/metric_classification/iris30_test.txt", sep="\t", header=TRUE)
+iris30_test = iris[,3:5]
 accuracy = 0
 
 for(i in c(1:length(iris30_test[,1]))){
@@ -116,18 +108,15 @@ for(i in c(1:length(iris30_test[,1]))){
 
 print(accuracy/length(iris30_test[,1]))
 
-# points(which.min(loo), min(loo), pch=21, bg = 'red', col = 'red')
-# 
-# plot(iris30[, 1:2], pch = 21, bg = colors[iris30$Species], col
-#     = colors[iris30$Species], asp = 1, main='1NN', xlab = 'petal length', ylab = 'petal width')
-# 
-# points_array <- c()
-# 
-# for (xtmp in seq(0, 7, by=0.1)){
-#  for (ytmp in seq(0, 3, by=0.1)){
-#    z <- c(xtmp,ytmp)
-#    class <- kNN(xl, z, opt_k)
-#    points_array <- c(points_array, c(z))
-#    points(z[1], z[2], pch = 1, col = colors[class])
-#  }
-# }
+points(which.min(loo), min(loo), pch=21, bg = 'red', col = 'red')
+
+plot(iris30[, 1:2], pch = 21, bg = colors[iris30$Species], col
+    = colors[iris30$Species], asp = 1, main='6NN', xlab = 'petal length', ylab = 'petal width')
+
+for (xtmp in seq(0, 7, by=0.1)){
+ for (ytmp in seq(0, 3, by=0.1)){
+   z <- c(xtmp,ytmp)
+   class <- kNN(iris30, z, opt_k)
+   points(z[1], z[2], pch = 1, col = colors[class])
+ }
+}
