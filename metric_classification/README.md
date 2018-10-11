@@ -207,10 +207,12 @@
 </table>
 
 <h2>Сравнение карт классификации</h2>
-
+<h4>1NN</h4>
 <img src="1NN/1NN_classification_card.png">
-<img src="KNN/5NN_classification_card.png">
-<img src="kWNN(with LOO)/kWNN_classification_card.png">
+<h4>kNN(k=6)</h4>
+<img src="LOO/classification_card.png">
+<h4>kWNN(k=30, q=0.95)</h4>
+<img src="kWNN(with LOO)/classification_card.png">
 
 
 <h2>Parsen window</h2>

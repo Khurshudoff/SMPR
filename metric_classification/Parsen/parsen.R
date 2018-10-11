@@ -5,7 +5,7 @@ euclideanDistance <- function(u, v){
 kernelRectangle <- function(x, y, metricFunction, h){
   r = metricFunction(x,y) / h
   if(r <= 1){
-    return(1/2)
+    return(h/2)
   } 
   return(0)
 }
