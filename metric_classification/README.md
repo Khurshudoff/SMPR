@@ -110,7 +110,8 @@
 	}
 </code>
 
-<img src="LOO/LOO.png">
+<img src="LOO/loo_k_graphic.png">
+<img src="LOO/classification_card.png">
 
 <h2>kWNN</h2>
 
