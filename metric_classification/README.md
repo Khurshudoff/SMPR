@@ -313,6 +313,29 @@ K(r) - ядро, не возрастает и положительно на [0,1
 <h4>Точность: 1</h4>
 <img src="Parsen/Triangle.png">
 
+<h2>Сравнение качества ядер</h2>
+<table>
+  <tbody>
+    <tr>
+      <td></td>
+      <td>rectangle</td>
+      <td>gaussian</td>
+      <td>Epanechnikov</td>
+      <td>quart</td>
+      <td>triangle</td>
+    </tr>
+    <tr>
+      <td>Число неверное классифицируемых объектов</td>
+      <td>7</td>
+      <td>4</td>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+
+
 <h2>Сравнение карт классификации</h2>
 <img src="Parsen/classification_card_rect.png">
 <img src="Parsen/classification_card_gaus.png">

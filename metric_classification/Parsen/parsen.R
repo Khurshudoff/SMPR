@@ -183,16 +183,20 @@ test <- function(){
       accuracy_tria <- accuracy_tria + 1
     }
   }
-  print(accuracy_rect / length(iris_test30[,1]))
-  print(accuracy_gaus / length(iris_test30[,1]))
-  print(accuracy_epan / length(iris_test30[,1]))
-  print(accuracy_quar / length(iris_test30[,1]))
-  print(accuracy_tria / length(iris_test30[,1]))
+  print(accuracy_rect)
+  print(accuracy_gaus)
+  print(accuracy_epan)
+  print(accuracy_quar)
+  print(accuracy_tria)
   
   layout(matrix(c(1,1), 1, 1, byrow = TRUE),
          widths=c(1), heights=c(1))
   
-  
+  # drawPlots(kernelRectangle, 'kernel Rectangle', opt_h=0.6, iris30=iris_test30[,3:5])
+  # drawPlots(kernelGaussian, 'kernel Gaussian', opt_h=0.1, iris30=iris_test30[,3:5])
+  # drawPlots(kernelEpanechnikov, 'kernel Epanechnikov', opt_h=0.6, iris30=iris_test30[,3:5])
+  # drawPlots(kernelQuart, 'kernel Quart', opt_h=0.6, iris30=iris_test30[,3:5])
+  # drawPlots(kernelTriangle, 'kernel Triangle', opt_h=0.6, iris30=iris_test30[,3:5])
   
 }
 
