@@ -312,3 +312,10 @@ K(r) - ядро, не возрастает и положительно на [0,1
 <h4>opt_h = 0.6 <br> loo(opt_h) = 0.03333333</h4>
 <h4>Точность: 1</h4>
 <img src="Parsen/Triangle.png">
+
+<h2>Сравнение карт классификации</h2>
+<img src="Parsen/classifiaction_card_rect">
+<img src="Parsen/classifiaction_card_gaus">
+<img src="Parsen/classifiaction_card_epan">
+<img src="Parsen/classifiaction_card_quart">
+<img src="Parsen/classifiaction_card_triangle">

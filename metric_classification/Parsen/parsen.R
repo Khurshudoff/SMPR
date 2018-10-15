@@ -59,14 +59,14 @@ parsen <- function(xl, z, h, metricFunction=euclideanDistance, kernel){
   }
 }
 
-looFunc <- function(mySeq, iris30){
+looFunc <- function(mySeq, iris30, kernel){
   loo_h <- c()
   
   for (h in mySeq){
     count = 0
     for (i in c(1:length(xl[,1]))){
       xl = iris30[-i,1:3]
-      class <- parsen(xl, iris30[i,1:2], h=h, kernel=kernelRectangle)
+      class <- parsen(xl, iris30[i,1:2], h=h, kernel=kernel)
       if(iris30[i,3] != class){
         count <- count + 1
       }
@@ -76,47 +76,49 @@ looFunc <- function(mySeq, iris30){
   return(loo_h)
 }
 
-drawPlots <- function(kernel, kernelName){
-  mySeq <- seq(0.1,2,by=0.05)
+drawPlots <- function(kernel, kernelName, opt_h=-5, iris30){
+  if(opt_h == -5){
+    mySeq <- seq(0.1,2,by=0.05)
   
-  loo_h <- looFunc(mySeq, iris30)
+    loo_h <- looFunc(mySeq, iris30, kernel)
+    
+    opt_h = mySeq[which.min(loo_h)]
+    
+    print(opt_h)
+    print(min(loo_h))
   
-  opt_h = mySeq[which.min(loo_h)]
+    plot(mySeq,
+         loo_h,
+         'p',
+         col='blue',
+         xlab='h',
+         ylab='loo',
+         main='optimization h with loo',
+         cex.main=0.8)
+    lines(mySeq,
+          loo_h,
+          type="l",
+          pch=22,
+          lty=1,
+          col="red")
   
-  print(opt_h)
-  print(min(loo_h))
+    points(mySeq[which.min(loo_h)], min(loo_h), pch=21, bg = 'red', col = 'red')
+  }
   
-  plot(mySeq, 
-       loo_h, 
-       'p', 
-       col='blue',
-       xlab='h',
-       ylab='loo',
-       main='optimization h with loo',
-       cex.main=0.8)
-  lines(mySeq, 
-        loo_h, 
-        type="l", 
-        pch=22, 
-        lty=1, 
-        col="red")
-  
-  points(mySeq[which.min(loo_h)], min(loo_h), pch=21, bg = 'red', col = 'red')
-  
-  plot(iris30[, 1:2], 
-       pch = 21, 
-       bg = colors[iris30$Species], 
-       col = colors[iris30$Species], 
+  plot(iris30[, 1:2],
+       pch = 21,
+       bg = colors[iris30$Species],
+       col = colors[iris30$Species],
        asp = 1,
        xlab='petal length',
        ylab='petal width',
        main=paste(c('parsen', kernelName, 'opt_h =', opt_h)),
        cex.main=0.8)
-  
+
   for (xtmp in seq(0, 7, by=0.1)){
     for (ytmp in seq(0, 3, by=0.1)){
       z <- c(xtmp,ytmp)
-      class <- parsen(xl, z, h=opt_h, kernel=kernel)
+      class <- parsen(iris30, z, h=opt_h, kernel=kernel)
       points_array <- c(points_array, c(z))
       points(z[1], z[2], pch = 1, col = colors[class])
     }
@@ -143,14 +145,14 @@ points_array <- c()
 ## LOO
 
 
-drawPlots(kernelRectangle, 'kernel Rectangle')
-drawPlots(kernelGaussian, 'kernel Gaussian')
-drawPlots(kernelEpanechnikov, 'kernel Epanechnikov')
-drawPlots(kernelQuart, 'kernel Quart')
-drawPlots(kernelTriangle, 'kernel Triangle')
+drawPlots(kernelRectangle, 'kernel Rectangle',iris30=xl)
+drawPlots(kernelGaussian, 'kernel Gaussian',iris30=xl)
+drawPlots(kernelEpanechnikov, 'kernel Epanechnikov',iris30=xl)
+drawPlots(kernelQuart, 'kernel Quart',iris30=xl)
+drawPlots(kernelTriangle, 'kernel Triangle',iris30=xl)
 
 test <- function(){
-  iris_test30 = iris[sample(c(1:150), 30, replace=FALSE),]
+  iris_test30 = iris
   
   accuracy_rect <- 0
   accuracy_gaus <- 0
@@ -186,6 +188,15 @@ test <- function(){
   print(accuracy_epan / length(iris_test30[,1]))
   print(accuracy_quar / length(iris_test30[,1]))
   print(accuracy_tria / length(iris_test30[,1]))
+  
+  layout(matrix(c(1,1), 1, 1, byrow = TRUE),
+         widths=c(1), heights=c(1))
+  
+  
+  
 }
 
 test()
+
+
+
