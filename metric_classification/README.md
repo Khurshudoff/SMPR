@@ -314,8 +314,8 @@ K(r) - ядро, не возрастает и положительно на [0,1
 <img src="Parsen/Triangle.png">
 
 <h2>Сравнение карт классификации</h2>
-<img src="Parsen/classifiaction_card_rect.png">
-<img src="Parsen/classifiaction_card_gaus.png">
-<img src="Parsen/classifiaction_card_epan.png">
-<img src="Parsen/classifiaction_card_quart.png">
-<img src="Parsen/classifiaction_card_triangle.png">
+<img src="Parsen/classification_card_rect.png">
+<img src="Parsen/classification_card_gaus.png">
+<img src="Parsen/classification_card_epan.png">
+<img src="Parsen/classification_card_quart.png">
+<img src="Parsen/classification_card_triangle.png">
