@@ -215,6 +215,9 @@
 <h4>kWNN(k=30, q=0.95)</h4>
 <img src="kWNN(with LOO)/classification_card.png">
 
+<h2>Вывод</h2>
+<p>На основании полученный результатов можно сделать вывод, что на этих данных лучше выбирать метод kNN(k=6), т.к. он проще и дает максимальную точность.</p>
+
 
 <h2>Parsen window</h2>
 <a href="https://www.codecogs.com/eqnedit.php?latex=w(i,x)&space;=&space;K&space;\left&space;(&space;\frac{\rho&space;(x,x^{(i)})}{h}&space;\right&space;)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?w(i,x)&space;=&space;K&space;\left&space;(&space;\frac{\rho&space;(x,x^{(i)})}{h}&space;\right&space;)" title="w(i,x) = K \left ( \frac{\rho (x,x^{(i)})}{h} \right )" /></a> , где h - ширина окна, <br>
@@ -318,11 +321,11 @@ K(r) - ядро, не возрастает и положительно на [0,1
   <tbody>
     <tr>
       <td></td>
-      <td>rectangle</td>
-      <td>gaussian</td>
-      <td>Epanechnikov</td>
-      <td>quart</td>
-      <td>triangle</td>
+      <td>Прямоугольное</td>
+      <td>Гауссовское</td>
+      <td>Епанечникова</td>
+      <td>Квартическое</td>
+      <td>Треугольное</td>
     </tr>
     <tr>
       <td>Число неверное классифицируемых объектов</td>
@@ -342,3 +345,6 @@ K(r) - ядро, не возрастает и положительно на [0,1
 <img src="Parsen/classification_card_epan.png">
 <img src="Parsen/classification_card_quart.png">
 <img src="Parsen/classification_card_triangle.png">
+
+<h2>Вывод</h2>
+<p>На основании полученный результатов можно сделать вывод, что на этих данных лучше выбирать метод парзеновского окна с гауссовским ядром, т.к. он дает маскимальную точность.</p>
