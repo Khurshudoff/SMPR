@@ -13,6 +13,9 @@
 	<li>Класс нового объекта х</li>
 </ul>
 
+<h2> Рассмотренные алгоритмы: </h2>
+<a href="#oneNN">sadfsadfsadf</a>
+
 <h2>Гипотеза компактности</h2>
 <p>близкие объекты, как правило, лежат в одном классе</p>
 
@@ -36,6 +39,7 @@
 </ul>
 
 <h2>1NN</h2>
+<a name="oneNN"></a>
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=w(i,x)&space;=&space;[i\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?w(i,x)&space;=&space;[i\leq&space;1]" title="w(i,x) = [i\leq 1]" /></a> - метод 1NN
 
