@@ -13,6 +13,57 @@
 	<li>Класс нового объекта х</li>
 </ul>
 
+<h2> Рассмотренные алгоритмы: </h2>
+<table>
+  <tbody>
+        <tr>
+	         <td>Метод</td>
+		 <td>Параметры</td>
+	         <td>Точность</td>
+	</tr>
+	<tr>
+		<td><a href="#parsenGaus">Метод Парзеновского окна с Гауссовким ядром</a></td>
+		<td>h=0.1</td>
+		<td>0,97</td>
+	</tr>
+	<tr>
+		<td><a href="#kNN">Метод К ближайших соседей</a></td>
+		<td>К=6</td>
+		<td>0,97</td>
+	</tr>
+	<tr>
+		<td><a href="#kWNN">Метод К взвешенных ближайших соседей</a></td>
+		<td>k=30, q=0.95</td>
+		<td>0,97</td>
+	</tr>
+	<tr>
+		<td><a href="#parsenEpan">Метод Парзеновского окна с ядром Епанечнкова</a></td>
+		<td>h=0.6</td>
+		<td>0,96</td>
+	</tr>
+	<tr>
+		<td><a href="#parsenQuart">Метод Парзеновского окна с квартическим ядром</a></td>
+		<td>h=0.6</td>
+		<td>0,96</td>
+	</tr>
+	<tr>
+		<td><a href="#parsenTrian">Метод Парзеновского окна с треугольным ядром</a></td>
+		<td>h=0.6</td>
+		<td>0,96</td>
+	</tr>
+	  <tr>
+                 <td><a href="#oneNN">Метод ближайшего соседа</a></td>
+		 <td>-</td>
+	         <td>0,95</td>
+        </tr>
+	<tr>
+		<td><a href="#parsenRect">Метод Парзеновского окна с прямоугольным ядром</a></td>
+	        <td>h=0.6</td>
+		<td>0,95</td>
+	</tr>
+  </tbody>
+</table>
+
 <h2>Гипотеза компактности</h2>
 <p>близкие объекты, как правило, лежат в одном классе</p>
 
@@ -35,6 +86,7 @@
 	<li><a href="https://www.codecogs.com/eqnedit.php?latex={\color{Red}&space;w(i,x)}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?{\color{Red}&space;w(i,x)}" title="{\color{Red} w(i,x)}" /></a> - вес (степень важности) i-го соседа объекта x, неотрицателен и не возрастает по i.</li>
 </ul>
 
+<a name="oneNN"></a>
 <h2>1NN</h2>
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=w(i,x)&space;=&space;[i\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?w(i,x)&space;=&space;[i\leq&space;1]" title="w(i,x) = [i\leq 1]" /></a> - метод 1NN
@@ -55,6 +107,7 @@
 	<li>требуется много времени на вычисление класса нового объекта</li>
 </ul>
 
+<a name="kNN"></a>
 <h2>KNN</h2>
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=$$w(i,x)&space;=&space;[i&space;\leq&space;k]$$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$$w(i,x)&space;=&space;[i&space;\leq&space;k]$$" title="$$w(i,x) = [i \leq k]$$" /></a> - метод KNN
@@ -113,6 +166,7 @@
 <img src="LOO/loo_k_graphic.png">
 <img src="LOO/classification_card.png">
 
+<a name="kWNN"></a>
 <h2>kWNN</h2>
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=$w(i,x)&space;=&space;[i&space;\leq&space;k]w_i$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$w(i,x)&space;=&space;[i&space;\leq&space;k]w_i$" title="$w(i,x) = [i \leq k]w_i$" /></a> - метод k weight NN
@@ -227,7 +281,7 @@ K(r) - ядро, не возрастает и положительно на [0,1
 <br>
 <a href="https://www.codecogs.com/eqnedit.php?latex=a(x;X^l,h,K)&space;=&space;\arg&space;\max_{y\in&space;Y}&space;{\sum_{i=1}^l{[y_i=y]&space;K\left(&space;\frac{\rho&space;(x,x_i)}{h}&space;\right)}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?a(x;X^l,h,K)&space;=&space;\arg&space;\max_{y\in&space;Y}&space;{\sum_{i=1}^l{[y_i=y]&space;K\left(&space;\frac{\rho&space;(x,x_i)}{h}&space;\right)}}" title="a(x;X^l,h,K) = \arg \max_{y\in Y} {\sum_{i=1}^l{[y_i=y] K\left( \frac{\rho (x,x_i)}{h} \right)}}" /></a>
 
-
+<a name="parsenRect"></a>
 <h3>Прямоугольное ядро</h3>
 <a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;\frac{1}{2}[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;\frac{1}{2}[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" title="K(r) = \frac{1}{2}[\left | r \right | \leq 1]" /></a>
 
@@ -247,6 +301,7 @@ K(r) - ядро, не возрастает и положительно на [0,1
 <h4>Точность: 0.9666667</h4>
 <img src="Parsen/rectangle.png">
 
+<a name="parsenGaus"></a>
 <h3>Гауссовское ядро</h3>
 <a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;(2\pi)^{\frac{1}{2}}e^{(-\frac{1}{2}&space;r^2)}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;(2\pi)^{\frac{1}{2}}e^{(-\frac{1}{2}&space;r^2)}" title="K(r) = (2\pi)^{\frac{1}{2}}e^{(-\frac{1}{2} r^2)}" /></a>
 <!-- gaussian kernel code -->
@@ -262,6 +317,7 @@ K(r) - ядро, не возрастает и положительно на [0,1
 <h4>Точность: 0.9666667</h4>
 <img src="Parsen/Gaussian.png">
 
+<a name="parsenEpan"></a>
 <h3>Ядро Епанечникова</h3>
 <a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;\frac{3}{4}(1-r^2)[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;\frac{3}{4}(1-r^2)[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" title="K(r) = \frac{3}{4}(1-r^2)[\left | r \right | \leq 1]" /></a>
 <!-- epan kernel code -->
@@ -281,6 +337,7 @@ K(r) - ядро, не возрастает и положительно на [0,1
 <h4>Точность: 1</h4>
 <img src="Parsen/Epanechnikov.png">
 
+<a name="parsenQuart"></a>
 <h3>Квартическое ядро</h3>
 <a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;\frac{15}{16}(1-r^2)^2[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;\frac{15}{16}(1-r^2)^2[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" title="K(r) = \frac{15}{16}(1-r^2)^2[\left | r \right | \leq 1]" /></a>
 <!-- quart kernel code -->
@@ -299,6 +356,7 @@ K(r) - ядро, не возрастает и положительно на [0,1
 <h4>Точность: 1</h4>
 <img src="Parsen/Quart.png">
 
+<a name="parsenTrian"></a>
 <h3>Треугольное ядро</h3>
 <a href="https://www.codecogs.com/eqnedit.php?latex=K(r)&space;=&space;(1-\left&space;|&space;r&space;\right&space;|)[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?K(r)&space;=&space;(1-\left&space;|&space;r&space;\right&space;|)[\left&space;|&space;r&space;\right&space;|&space;\leq&space;1]" title="K(r) = (1-\left | r \right |)[\left | r \right | \leq 1]" /></a>
 <!-- triangle kernel code -->
