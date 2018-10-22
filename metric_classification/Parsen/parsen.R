@@ -41,7 +41,7 @@ kernelTriangle <- function(x, y, metricFunction, h){
   return(0)
 }
 
-parsen <- function(xl, z, h, metricFunction=euclideanDistance, kernel){
+parsen <- function(xl, z, h=0.1, metricFunction=euclideanDistance, kernel=kernelGaussian){
   l <- dim(xl)[1]
   n <- dim(xl)[2] - 1
   
@@ -128,79 +128,84 @@ drawPlots <- function(kernel, kernelName, opt_h=-5, iris30){
 layout(matrix(c(1,2), 1, 2, byrow = TRUE),
        widths=c(1,1), heights=c(1))
 
-
-iris30 = read.table("/Users/khurshudov/Desktop/SMPR/metric_classification/iris30.txt", sep="\t", header=TRUE)
-
-colors <- c("setosa" = "red", "versicolor" = "green3",
-            "virginica" = "blue", "unknown" = "grey")
-
-xl <- iris30[, 1:3]
-
-# z <- c(6, 0.5)
-# class <- parsen(xl, z, h=1)
-# points(z[1], z[2], pch = 22, bg = colors[class], asp = 1)
-
-points_array <- c()
-
-## LOO
-
-
-drawPlots(kernelRectangle, 'kernel Rectangle',iris30=xl)
-drawPlots(kernelGaussian, 'kernel Gaussian',iris30=xl)
-drawPlots(kernelEpanechnikov, 'kernel Epanechnikov',iris30=xl)
-drawPlots(kernelQuart, 'kernel Quart',iris30=xl)
-drawPlots(kernelTriangle, 'kernel Triangle',iris30=xl)
-
-test <- function(){
-  iris_test30 = iris
-  
-  accuracy_rect <- 0
-  accuracy_gaus <- 0
-  accuracy_epan <- 0
-  accuracy_quar <- 0
-  accuracy_tria <- 0
-  
-  for (i in c(1:length(iris_test30[,1]))){
-    xl = iris30[,1:3]
-    class_rect <- parsen(xl, iris_test30[i,3:4], h=0.6, kernel=kernelRectangle)
-    class_gaus <- parsen(xl, iris_test30[i,3:4], h=0.1, kernel=kernelGaussian)
-    class_epan <- parsen(xl, iris_test30[i,3:4], h=0.6, kernel=kernelEpanechnikov)
-    class_quar <- parsen(xl, iris_test30[i,3:4], h=0.6, kernel=kernelQuart)
-    class_tria <- parsen(xl, iris_test30[i,3:4], h=0.6, kernel=kernelTriangle)
-    if(iris_test30[i,5] == class_rect){
-      accuracy_rect <- accuracy_rect + 1
-    }
-    if(iris_test30[i,5] == class_gaus){
-      accuracy_gaus <- accuracy_gaus + 1
-    }
-    if(iris_test30[i,5] == class_epan){
-      accuracy_epan <- accuracy_epan + 1
-    }
-    if(iris_test30[i,5] == class_quar){
-      accuracy_quar <- accuracy_quar + 1
-    }
-    if(iris_test30[i,5] == class_tria){
-      accuracy_tria <- accuracy_tria + 1
-    }
-  }
-  print(accuracy_rect)
-  print(accuracy_gaus)
-  print(accuracy_epan)
-  print(accuracy_quar)
-  print(accuracy_tria)
-  
-  layout(matrix(c(1,1), 1, 1, byrow = TRUE),
-         widths=c(1), heights=c(1))
-  
-  # drawPlots(kernelRectangle, 'kernel Rectangle', opt_h=0.6, iris30=iris_test30[,3:5])
-  # drawPlots(kernelGaussian, 'kernel Gaussian', opt_h=0.1, iris30=iris_test30[,3:5])
-  # drawPlots(kernelEpanechnikov, 'kernel Epanechnikov', opt_h=0.6, iris30=iris_test30[,3:5])
-  # drawPlots(kernelQuart, 'kernel Quart', opt_h=0.6, iris30=iris_test30[,3:5])
-  # drawPlots(kernelTriangle, 'kernel Triangle', opt_h=0.6, iris30=iris_test30[,3:5])
-  
+start <- Sys.time()
+for(idx in 1:150){
+  parsen(iris[, 3:5], iris[idx,3:4])
 }
+print(Sys.time() - start)
 
-test()
-
-
-
+# iris30 = read.table("/Users/khurshudov/Desktop/SMPR/metric_classification/iris30.txt", sep="\t", header=TRUE)
+# 
+# colors <- c("setosa" = "red", "versicolor" = "green3",
+#             "virginica" = "blue", "unknown" = "grey")
+# 
+# xl <- iris30[, 1:3]
+# 
+# # z <- c(6, 0.5)
+# # class <- parsen(xl, z, h=1)
+# # points(z[1], z[2], pch = 22, bg = colors[class], asp = 1)
+# 
+# points_array <- c()
+# 
+# ## LOO
+# 
+# 
+# drawPlots(kernelRectangle, 'kernel Rectangle',iris30=xl)
+# drawPlots(kernelGaussian, 'kernel Gaussian',iris30=xl)
+# drawPlots(kernelEpanechnikov, 'kernel Epanechnikov',iris30=xl)
+# drawPlots(kernelQuart, 'kernel Quart',iris30=xl)
+# drawPlots(kernelTriangle, 'kernel Triangle',iris30=xl)
+# 
+# test <- function(){
+#   iris_test30 = iris
+#   
+#   accuracy_rect <- 0
+#   accuracy_gaus <- 0
+#   accuracy_epan <- 0
+#   accuracy_quar <- 0
+#   accuracy_tria <- 0
+#   
+#   for (i in c(1:length(iris_test30[,1]))){
+#     xl = iris30[,1:3]
+#     class_rect <- parsen(xl, iris_test30[i,3:4], h=0.6, kernel=kernelRectangle)
+#     class_gaus <- parsen(xl, iris_test30[i,3:4], h=0.1, kernel=kernelGaussian)
+#     class_epan <- parsen(xl, iris_test30[i,3:4], h=0.6, kernel=kernelEpanechnikov)
+#     class_quar <- parsen(xl, iris_test30[i,3:4], h=0.6, kernel=kernelQuart)
+#     class_tria <- parsen(xl, iris_test30[i,3:4], h=0.6, kernel=kernelTriangle)
+#     if(iris_test30[i,5] == class_rect){
+#       accuracy_rect <- accuracy_rect + 1
+#     }
+#     if(iris_test30[i,5] == class_gaus){
+#       accuracy_gaus <- accuracy_gaus + 1
+#     }
+#     if(iris_test30[i,5] == class_epan){
+#       accuracy_epan <- accuracy_epan + 1
+#     }
+#     if(iris_test30[i,5] == class_quar){
+#       accuracy_quar <- accuracy_quar + 1
+#     }
+#     if(iris_test30[i,5] == class_tria){
+#       accuracy_tria <- accuracy_tria + 1
+#     }
+#   }
+#   print(accuracy_rect)
+#   print(accuracy_gaus)
+#   print(accuracy_epan)
+#   print(accuracy_quar)
+#   print(accuracy_tria)
+#   
+#   layout(matrix(c(1,1), 1, 1, byrow = TRUE),
+#          widths=c(1), heights=c(1))
+#   
+#   # drawPlots(kernelRectangle, 'kernel Rectangle', opt_h=0.6, iris30=iris_test30[,3:5])
+#   # drawPlots(kernelGaussian, 'kernel Gaussian', opt_h=0.1, iris30=iris_test30[,3:5])
+#   # drawPlots(kernelEpanechnikov, 'kernel Epanechnikov', opt_h=0.6, iris30=iris_test30[,3:5])
+#   # drawPlots(kernelQuart, 'kernel Quart', opt_h=0.6, iris30=iris_test30[,3:5])
+#   # drawPlots(kernelTriangle, 'kernel Triangle', opt_h=0.6, iris30=iris_test30[,3:5])
+#   
+# }
+# 
+# test()
+# 
+# 
+# 
