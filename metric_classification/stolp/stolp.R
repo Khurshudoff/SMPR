@@ -18,7 +18,7 @@ parsen <- function(xl, z, h = 0.1, metricFunction=euclideanDistance, kernel=kern
     curObjClass = xl[i, n+1]
     d[curObjClass] <- d[curObjClass] + kernel(xl[i,1:n], z, metricFunction, h)
   }
-  return (names(which.max(d)))  
+  return (c(1,names(which.max(d))))
 }
 
 oneNN <- function(xl, z, metricFunction =euclideanDistance){
@@ -80,7 +80,8 @@ findAccuracy <- function(learn_data ,data, classifMethod){
     
     data[i,5] = 'false'
     
-    if(classes[as.integer(class)] == data[i,3]){
+    if(class == data[i,3]){
+    # if(classes[as.integer(class)] == data[i,3]){
       data[i,5] = 'true'
       good_class <- data.frame(rbind(good_class, data[i,]))
       accuracy = accuracy + 1
@@ -226,7 +227,7 @@ stolp <- function(my_iris, l0, classifMethod=kNN, riskFunc=riskFunction){
   my_iris_without_noiseObjesct <- my_iris[my_iris[,dim(my_iris)[2]] > sigma, ]
   
   
-  # #3 finding elements from each class with minimal resk
+  # #3 finding elements from each class with minimal risk
   
   setosaDF = my_iris_without_noiseObjesct[my_iris_without_noiseObjesct[,dim(my_iris)[2]-1] == 'setosa',]
   setosaMin <- setosaDF[which.min(setosaDF[,dim(my_iris)[2]]), ]
@@ -280,10 +281,10 @@ stolp <- function(my_iris, l0, classifMethod=kNN, riskFunc=riskFunction){
   print(Sys.time() - start)
 }
 
-my_iris = read.table("/Users/khurshudov/Desktop/SMPR/metric_classification/iris30.txt", sep="\t", header=TRUE)
-# my_iris = iris[, 3:5]
+# my_iris = read.table("/Users/khurshudov/Desktop/SMPR/metric_classification/iris30.txt", sep="\t", header=TRUE)
+my_iris = iris[, 3:5]
 
 # printAccuracy(my_iris)
 # paintClassificationCard(my_iris)
-stolp(my_iris, 5, classifMethod = kNN)
+stolp(my_iris, 5, classifMethod = parsen)
 # margin(my_iris[20, ], my_iris, 3)
