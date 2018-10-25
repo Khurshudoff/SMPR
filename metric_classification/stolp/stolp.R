@@ -81,7 +81,7 @@ findAccuracy <- function(learn_data ,data, classifMethod){
     data[i,5] = 'false'
     
     if(class == data[i,3]){
-    # if(classes[as.integer(class)] == data[i,3]){
+      # if(classes[as.integer(class)] == data[i,3]){
       data[i,5] = 'true'
       good_class <- data.frame(rbind(good_class, data[i,]))
       accuracy = accuracy + 1
@@ -91,10 +91,9 @@ findAccuracy <- function(learn_data ,data, classifMethod){
   }
   
   colors <- c("setosa" = "red", "versicolor" = "green3", "virginica" = "blue1")
-  pchList <- c("true" = 21, "false" = 17, "train" = 23)
+  pchList <- c("true" = 21, "false" = 24, "train" = 23)
   plot(data[, 1:2],
        pch = pchList[data[,5]],
-       bg = colors[data$Species],
        col = colors[data$Species],
        xlab = 'petal length',
        ylab = 'petal width',
@@ -102,8 +101,8 @@ findAccuracy <- function(learn_data ,data, classifMethod){
        asp=1
   )
   legend(1, 2.75, legend=c("right classified", "wrong classified", "support elements"),
-         pt.bg=c(NA, NA, "orange"), pch=c(19,17,21), cex=0.6, pt.cex = 1, text.width = 1)
-  points(learn_data[,1:2], pch=21, bg="orange", col=colors[learn_data$Species])
+         pt.bg=c(NA, NA, "black"), pch=c(21,24,21), cex=0.6, pt.cex = 1, text.width = 1)
+  points(learn_data[,1:2], pch=21, bg=colors[learn_data$Species], col=colors[learn_data$Species])
   
   return(c(length(data[,1]) - accuracy, names(which.max(table(bad_class[,3])))))
 }
@@ -144,7 +143,7 @@ distanceToClasses <- function(x, my_iris){
   
   min_dist_to_his_class <- oneNN(his_class, x[,1:2])[1]
   min_dist_to_alien_class <- oneNN(alien_class, x[,1:2])[1]
-
+  
   return(c(min_dist_to_his_class, min_dist_to_alien_class))
 }
 
@@ -155,10 +154,10 @@ riskFunction <- function(x, my_iris){
   distIn = distances[1] # distance to nearest element from his class
   distOut = distances[2] # distance to nearest element from alien class
   # return(distIn/distOut)
-  return(margin(x, my_iris, 3))
+  return(margin(x, my_iris))
 }
 
-margin <- function(x, my_iris, k) {
+margin <- function(x, my_iris) {
   # ## kNN
   # orderedXl <- sortObjectsByDist(my_iris, x[,1:2])
   # 
@@ -176,18 +175,26 @@ margin <- function(x, my_iris, k) {
   
   l <- dim(my_iris)[1]
   n <- dim(my_iris)[2] - 1
-
+  
   d <- c(0.0,0.0,0.0)
   names(d) <- c("setosa", "versicolor", "virginica")
-
+  
   for (i in 1:l){
     curObjClass = my_iris[i, n+1]
     d[curObjClass] <- d[curObjClass] + kernelGaussian(my_iris[i,1:2], x[,1:2], metricFunction=euclideanDistance, h=0.1)
   }
-
-  sortedCounts = sort(d)
   
-  return(sortedCounts[3] - sortedCounts[2])
+  namesD = names(d)
+  
+  dCur <- which(namesD %in% x$Species)
+  
+  sortedCounts = sort(d[-dCur])
+  
+  # print(x[,3])
+  # print(d)
+  # print('__________________')
+  
+  return(d[x[, 3]] - sortedCounts[2])
 }
 
 countSigma <- function(my_iris, riskFunc) {
@@ -199,10 +206,10 @@ countSigma <- function(my_iris, riskFunc) {
   
   plotTitle <- paste('parsen with gaussian kernel \n sigma =', round(sigma, 3))
   plot(sortedRiskVector, pch=20, xlab='iris', ylab='margin', main=plotTitle)
-
+  
   lines(sortedRiskVector, pch=16)
   lines(c(-100,250), c(sigma,sigma), pch=16, col='red')
-
+  
   print(paste0('sigma = ', round(sigma, 3)))
   
   return(sigma)
@@ -258,20 +265,23 @@ stolp <- function(my_iris, l0, classifMethod=kNN, riskFunc=riskFunction){
     
     if(accArr[2] == 'versicolor'){
       maxIndex = which.max(versicolorDF[, dim(my_iris)[2]])
+      print(versicolorDF[maxIndex, ])
       learn_data <- data.frame(rbind(learn_data, versicolorDF[maxIndex, ]))
       versicolorDF <- versicolorDF[-maxIndex, ]
     } else if(accArr[2] == 'setosa'){
       maxIndex = which.max(setosaDF[, dim(my_iris)[2]])
+      print(setosaDF[maxIndex, ])
       learn_data <- data.frame(rbind(learn_data, setosaDF[maxIndex, ]))
       setosaDF <- setosaDF[-maxIndex, ]
     } else {
       maxIndex = which.max(virginicaDF[, dim(my_iris)[2]])
+      print(virginicaDF[maxIndex, ])
       learn_data <- data.frame(rbind(learn_data, virginicaDF[maxIndex, ]))
       virginicaDF <- virginicaDF[-maxIndex, ]
     }
     
   }
-
+  
   print(paste0('accuracy = ', 1 - as.integer(findAccuracy(learn_data, my_iris, classifMethod)[1]) / length(my_iris[,1]) ))
   
   start <- Sys.time()
@@ -287,4 +297,5 @@ my_iris = iris[, 3:5]
 # printAccuracy(my_iris)
 # paintClassificationCard(my_iris)
 stolp(my_iris, 5, classifMethod = parsen)
-# margin(my_iris[20, ], my_iris, 3)
+
+# margin(my_iris[1], my_iris, 3)
