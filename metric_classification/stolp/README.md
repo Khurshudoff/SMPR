@@ -18,18 +18,22 @@
 margin <- function(x, my_iris, k) {
   l <- dim(my_iris)[1]
   n <- dim(my_iris)[2] - 1
-
+  
   d <- c(0.0,0.0,0.0)
   names(d) <- c("setosa", "versicolor", "virginica")
-
+  
   for (i in 1:l){
     curObjClass = my_iris[i, n+1]
     d[curObjClass] <- d[curObjClass] + kernelGaussian(my_iris[i,1:2], x[,1:2], metricFunction=euclideanDistance, h=0.1)
   }
-
-  sortedCounts = sort(d)
   
-  return(sortedCounts[3] - sortedCounts[2])
+  namesD = names(d)
+  
+  dCur <- which(namesD %in% x$Species)
+  
+  sortedCounts = sort(d[-dCur])
+  
+  return(d[x[, 3]] - sortedCounts[2])
 }
 ```
 
