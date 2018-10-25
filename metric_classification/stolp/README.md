@@ -61,7 +61,7 @@ margin <- function(x, my_iris, k) {
 2. Допустимая доля ошибок <img src="https://latex.codecogs.com/gif.latex?{\color{Red}l_0}" title="l_0" /> = __5__,
 3. Порог отсечения выбросов <img src="https://latex.codecogs.com/gif.latex?{\color{Red}\delta}" title="\delta" /> - __отсечем 4% всех оюъектов__,
 4. Алгоритм классификации <img src="https://latex.codecogs.com/gif.latex?{\color{Red}a}" title="a" /> - __окно парзена с гауссовским окном(h=0.1)__,
-5. Формула для вычисления риска <img src="https://latex.codecogs.com/gif.latex?{\color{Red}W} =- {\mathbf M(x_i,\Omega&space;)}" title="M(x_i,\Omega )">.
+5. Формула для вычисления риска <img src="https://latex.codecogs.com/gif.latex?{\color{Red}W}&space;=-&space;{\mathbf&space;M(x_i,\Omega)}" title="{\color{Red}W} =- {\mathbf M(x_i,\Omega)}" />
 
 [1] "3  ||||  false positive =  8 / 150  =  0.053"
 [1] "4  ||||  false positive =  7 / 150  =  0.047"
