@@ -190,10 +190,6 @@ margin <- function(x, my_iris) {
   
   sortedCounts = sort(d[-dCur])
   
-  # print(x[,3])
-  # print(d)
-  # print('__________________')
-  
   return(d[x[, 3]] - sortedCounts[2])
 }
 
@@ -241,11 +237,11 @@ stolp <- function(my_iris, l0, classifMethod=kNN, riskFunc=riskFunction){
   # print(setosaMin)
   
   versicolorDF = my_iris_without_noiseObjesct[my_iris_without_noiseObjesct[,dim(my_iris)[2]-1] == 'versicolor',]
-  versicolorMin <- versicolorDF[which.min(setosaDF[,dim(my_iris)[2]]), ]
+  versicolorMin <- versicolorDF[which.min(versicolorDF[,dim(my_iris)[2]]), ]
   # print(versicolorMin)
   
   virginicaDF = my_iris_without_noiseObjesct[my_iris_without_noiseObjesct[,dim(my_iris)[2]-1] == 'virginica',]
-  virginicaMin <- virginicaDF[which.min(setosaDF[,dim(my_iris)[2]]), ]
+  virginicaMin <- virginicaDF[which.min(virginicaDF[,dim(my_iris)[2]]), ]
   # print(virginicaMin)
   
   learn_data <- data.frame(rbind(setosaMin, versicolorMin, virginicaMin))
