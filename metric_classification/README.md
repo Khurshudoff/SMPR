@@ -482,17 +482,6 @@ margin <- function(x, my_iris, k) {
 4. Алгоритм классификации <img src="https://latex.codecogs.com/gif.latex?{\color{Red}a}" title="a" /> - __окно парзена с гауссовским окном(h=0.1)__,
 5. Формула для вычисления риска <img src="https://latex.codecogs.com/gif.latex?{\color{Red}W}&space;=-&space;{\mathbf&space;M(x_i,\Omega)}" title="{\color{Red}W} =- {\mathbf M(x_i,\Omega)}" />
 
-[1] "3  ||||  false positive =  8 / 150  =  0.053"
-[1] "4  ||||  false positive =  7 / 150  =  0.047"
-[1] "5  ||||  false positive =  7 / 150  =  0.047"
-[1] "6  ||||  false positive =  7 / 150  =  0.047"
-[1] "7  ||||  false positive =  7 / 150  =  0.047"
-[1] "8  ||||  false positive =  7 / 150  =  0.047"
-[1] "9  ||||  false positive =  5 / 150  =  0.033"
-[1] "10  ||||  false positive =  5 / 150  =  0.033"
-[1] "11  ||||  false positive =  5 / 150  =  0.033"
-[1] "12  ||||  false positive =  5 / 150  =  0.033"
-[1] "13  ||||  false positive =  4 / 150  =  0.027"
 
 | Шаг | Количество элементов  во множестве эталонов | Ошибка |
 | --- | ------ |------------------|
