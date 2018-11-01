@@ -21,39 +21,6 @@ parsen <- function(xl, z, h = 0.1, metricFunction=euclideanDistance, kernel=kern
   return (c(1,names(which.max(d))))
 }
 
-oneNN <- function(xl, z, metricFunction =euclideanDistance){
-  
-  min_dist = 1e15
-  min_dist_class = 'setosa'
-  
-  l <- dim(xl)[1]
-  n <- dim(xl)[2] - 1
-  
-  for (i in 1:l){
-    tmp_dist =metricFunction(xl[i, 1:n], z)
-    
-    if(tmp_dist < min_dist) {
-      min_dist = tmp_dist
-      min_dist_class = xl[i, n+1]
-    }
-  }
-  
-  return (c(min_dist, min_dist_class))
-}
-
-kNN <- function(xl, z, k = 3){
-  
-  orderedXl <- sortObjectsByDist(xl, z)
-  n <- dim(orderedXl)[2] - 1
-  
-  classes <- orderedXl[1:k, n + 1]
-  
-  counts <- table(classes)
-  
-  class <- which.max(counts)
-  return (c(1,class))
-}
-
 sortObjectsByDist <- function(xl, z, metricFunction = euclideanDistance){
   l <- dim(xl)[1]
   n <- dim(xl)[2] - 1
@@ -107,72 +74,11 @@ findAccuracy <- function(learn_data ,data, classifMethod){
   return(c(length(data[,1]) - accuracy, names(which.max(table(bad_class[,3])))))
 }
 
-paintClassificationCard <- function(my_iris){
-  colors <- c("setosa" = "red", "versicolor" = "green3",
-              "virginica" = "blue")
-  plot(my_iris[, 1:2],
-       pch = 21,
-       bg = colors[my_iris$Species],
-       col = colors[my_iris$Species],
-       xlab = 'petal length',
-       ylab = 'petal width',
-       main = '1NN',
-       asp=1
-  )
-  points_array = c()
-  
-  step <- 0.5
-  
-  for (xtmp in seq(0, 7, by=step)){
-    for (ytmp in seq(0, 3, by=step)){
-      z <- c(xtmp,ytmp)
-      class <- oneNN(my_iris, z)[2]
-      points_array = c(points_array, c(z))
-      points(z[1], z[2], pch = 1, col = colors[class])
-    }
-  }
-}
-
-distanceToClasses <- function(x, my_iris){
-  his_class <- my_iris[my_iris$Species == x$Species &
-                         my_iris$Petal.Length != x$Petal.Length &
-                         my_iris$Petal.Width != x$Petal.Width, ]
-  alien_class <- my_iris[my_iris$Species != x$Species &
-                           my_iris$Petal.Length != x$Petal.Length &
-                           my_iris$Petal.Width != x$Petal.Width, ]
-  
-  min_dist_to_his_class <- oneNN(his_class, x[,1:2])[1]
-  min_dist_to_alien_class <- oneNN(alien_class, x[,1:2])[1]
-  
-  return(c(min_dist_to_his_class, min_dist_to_alien_class))
-}
-
 riskFunction <- function(x, my_iris){
-  
-  distances = distanceToClasses(x, my_iris)
-  
-  distIn = distances[1] # distance to nearest element from his class
-  distOut = distances[2] # distance to nearest element from alien class
-  # return(distIn/distOut)
   return(margin(x, my_iris))
 }
 
 margin <- function(x, my_iris) {
-  # ## kNN
-  # orderedXl <- sortObjectsByDist(my_iris, x[,1:2])
-  # 
-  # n <- dim(orderedXl)[2] - 1
-  # 
-  # classes <- orderedXl[1:k, n + 1]
-  # 
-  # counts <- table(classes)
-  # 
-  # n <- length(counts)
-  # sortedCounts = sort(counts,partial=n-1)
-  # 
-  # return(sortedCounts[n] - sortedCounts[n-1])
-  # ##
-  
   l <- dim(my_iris)[1]
   n <- dim(my_iris)[2] - 1
   
@@ -232,54 +138,62 @@ stolp <- function(my_iris, l0, classifMethod=kNN, riskFunc=riskFunction){
   
   # #3 finding elements from each class with minimal risk
   
-  setosaDF = my_iris_without_noiseObjesct[my_iris_without_noiseObjesct[,dim(my_iris)[2]-1] == 'setosa',]
-  setosaMin <- setosaDF[which.min(setosaDF[,dim(my_iris)[2]]), ]
-  # print(setosaMin)
+  my_iris_without_learn_data <- my_iris_without_noiseObjesct
   
-  versicolorDF = my_iris_without_noiseObjesct[my_iris_without_noiseObjesct[,dim(my_iris)[2]-1] == 'versicolor',]
-  versicolorMin <- versicolorDF[which.min(versicolorDF[,dim(my_iris)[2]]), ]
-  # print(versicolorMin)
+  learn_data <- data.frame()
   
-  virginicaDF = my_iris_without_noiseObjesct[my_iris_without_noiseObjesct[,dim(my_iris)[2]-1] == 'virginica',]
-  virginicaMin <- virginicaDF[which.min(virginicaDF[,dim(my_iris)[2]]), ]
-  # print(virginicaMin)
+  for(i in unique(iris$Species)){
+    curDF <- my_iris_without_noiseObjesct[my_iris_without_noiseObjesct[,dim(my_iris)[2]-1] == i,]
+    classMin <- curDF[which.min(curDF[,dim(my_iris)[2]]), ]
+    curDF <- curDF[-which.min(curDF[,dim(my_iris)[2]]), ]
+    learn_data <- rbind(learn_data, classMin)
+  }
   
-  learn_data <- data.frame(rbind(setosaMin, versicolorMin, virginicaMin))
-  
+  # versicolorDF = my_iris_without_noiseObjesct[my_iris_without_noiseObjesct[,dim(my_iris)[2]-1] == 'versicolor',]
+  # versicolorMin <- versicolorDF[which.min(versicolorDF[,dim(my_iris)[2]]), ]
+  # # print(versicolorMin)
+
   # #4 add element to learn_data
   while(TRUE){
     accArr <- findAccuracy(learn_data, my_iris, classifMethod)
-    
+
     print( paste(
       paste(length(learn_data[,1]), ' |||| '),
       paste('false positive = ', accArr[1], '/', length(my_iris[,1]), ' = ', round(as.integer(accArr[1])/length(my_iris[,1]),3))
     ))
-    
+
     if(as.integer(accArr[1]) < l0){
       break
     }
     
-    if(accArr[2] == 'versicolor'){
-      maxIndex = which.max(versicolorDF[, dim(my_iris)[2]])
-      print(versicolorDF[maxIndex, ])
-      learn_data <- data.frame(rbind(learn_data, versicolorDF[maxIndex, ]))
-      versicolorDF <- versicolorDF[-maxIndex, ]
-    } else if(accArr[2] == 'setosa'){
-      maxIndex = which.max(setosaDF[, dim(my_iris)[2]])
-      print(setosaDF[maxIndex, ])
-      learn_data <- data.frame(rbind(learn_data, setosaDF[maxIndex, ]))
-      setosaDF <- setosaDF[-maxIndex, ]
-    } else {
-      maxIndex = which.max(virginicaDF[, dim(my_iris)[2]])
-      print(virginicaDF[maxIndex, ])
-      learn_data <- data.frame(rbind(learn_data, virginicaDF[maxIndex, ]))
-      virginicaDF <- virginicaDF[-maxIndex, ]
-    }
-    
+    className <- accArr[2]
+    curClassDF <- my_iris_without_learn_data[my_iris_without_learn_data$Species == className, ]
+    maxIndex <- which.max(curClassDF[, dim(my_iris)[2]])
+    print(curClassDF[maxIndex, ])
+    learn_data <- data.frame(rbind(learn_data, curClassDF[maxIndex, ]))
+    my_iris_without_learn_data <- my_iris_without_learn_data[-maxIndex, ]
+
+    # if(accArr[2] == 'versicolor'){
+    #   maxIndex = which.max(versicolorDF[, dim(my_iris)[2]])
+    #   print(versicolorDF[maxIndex, ])
+    #   learn_data <- data.frame(rbind(learn_data, versicolorDF[maxIndex, ]))
+    #   versicolorDF <- versicolorDF[-maxIndex, ]
+    # } else if(accArr[2] == 'setosa'){
+    #   maxIndex = which.max(setosaDF[, dim(my_iris)[2]])
+    #   print(setosaDF[maxIndex, ])
+    #   learn_data <- data.frame(rbind(learn_data, setosaDF[maxIndex, ]))
+    #   setosaDF <- setosaDF[-maxIndex, ]
+    # } else {
+    #   maxIndex = which.max(virginicaDF[, dim(my_iris)[2]])
+    #   print(virginicaDF[maxIndex, ])
+    #   learn_data <- data.frame(rbind(learn_data, virginicaDF[maxIndex, ]))
+    #   virginicaDF <- virginicaDF[-maxIndex, ]
+    # }
+
   }
-  
+
   print(paste0('accuracy = ', 1 - as.integer(findAccuracy(learn_data, my_iris, classifMethod)[1]) / length(my_iris[,1]) ))
-  
+
   start <- Sys.time()
   for(idx in 1:150){
     parsen(learn_data[, 1:3], my_iris[idx,1:2])
