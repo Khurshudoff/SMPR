@@ -502,13 +502,13 @@ margin <- function(x, my_iris, k) {
 
 
 ### Шаг 1: __3 объекта__ во множестве эталонов, __точность 0.82__
-<img src="img/parsen_1.png">
+<img src="stolp/img/parsen_1.png">
 
 ### Шаг 2: __4 объекта__ во множестве эталонов, __точность 0.913__
-<img src="img/parsen_2.png">
+<img src="stolp/img/parsen_2.png">
 
 ### Шаг 3: __5 объектов__ во множестве эталонов, __точность 0.973__
-<img src="img/parsen_3.png">
+<img src="stolp/img/parsen_3.png">
 
 
 ## Сравнение скорости работы и точности
