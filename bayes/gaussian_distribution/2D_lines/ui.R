@@ -39,8 +39,13 @@ ui <- fluidPage(
                   min = 0.1,
                   max = 1.7,
                   value = 1,
+                  step = 0.1),
+      sliderInput(inputId = "naklon",
+                  label = "naklon",
+                  min = 0,
+                  max = 2,
+                  value = 0,
                   step = 0.1)
-      
     ),
     
     # Main panel for displaying outputs ----

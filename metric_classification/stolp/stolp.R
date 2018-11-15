@@ -148,10 +148,6 @@ stolp <- function(my_iris, l0, classifMethod=kNN, riskFunc=riskFunction){
     curDF <- curDF[-which.min(curDF[,dim(my_iris)[2]]), ]
     learn_data <- rbind(learn_data, classMin)
   }
-  
-  # versicolorDF = my_iris_without_noiseObjesct[my_iris_without_noiseObjesct[,dim(my_iris)[2]-1] == 'versicolor',]
-  # versicolorMin <- versicolorDF[which.min(versicolorDF[,dim(my_iris)[2]]), ]
-  # # print(versicolorMin)
 
   # #4 add element to learn_data
   while(TRUE){
@@ -168,27 +164,13 @@ stolp <- function(my_iris, l0, classifMethod=kNN, riskFunc=riskFunction){
     
     className <- accArr[2]
     curClassDF <- my_iris_without_learn_data[my_iris_without_learn_data$Species == className, ]
+    
     maxIndex <- which.max(curClassDF[, dim(my_iris)[2]])
     print(curClassDF[maxIndex, ])
+    
     learn_data <- data.frame(rbind(learn_data, curClassDF[maxIndex, ]))
+    
     my_iris_without_learn_data <- my_iris_without_learn_data[-maxIndex, ]
-
-    # if(accArr[2] == 'versicolor'){
-    #   maxIndex = which.max(versicolorDF[, dim(my_iris)[2]])
-    #   print(versicolorDF[maxIndex, ])
-    #   learn_data <- data.frame(rbind(learn_data, versicolorDF[maxIndex, ]))
-    #   versicolorDF <- versicolorDF[-maxIndex, ]
-    # } else if(accArr[2] == 'setosa'){
-    #   maxIndex = which.max(setosaDF[, dim(my_iris)[2]])
-    #   print(setosaDF[maxIndex, ])
-    #   learn_data <- data.frame(rbind(learn_data, setosaDF[maxIndex, ]))
-    #   setosaDF <- setosaDF[-maxIndex, ]
-    # } else {
-    #   maxIndex = which.max(virginicaDF[, dim(my_iris)[2]])
-    #   print(virginicaDF[maxIndex, ])
-    #   learn_data <- data.frame(rbind(learn_data, virginicaDF[maxIndex, ]))
-    #   virginicaDF <- virginicaDF[-maxIndex, ]
-    # }
 
   }
 
